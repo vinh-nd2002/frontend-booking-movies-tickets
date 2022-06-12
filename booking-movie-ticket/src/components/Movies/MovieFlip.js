@@ -1,6 +1,7 @@
 import React from "react";
 import "./MovieFlip.css";
 import { PlayCircleOutlined, ShoppingCartOutlined } from "@ant-design/icons";
+import { NavLink } from "react-router-dom";
 export const MovieFlip = (props) => {
   const { movie } = props;
   return (
@@ -8,7 +9,7 @@ export const MovieFlip = (props) => {
       <div className="flip-card-inner">
         <div className="flip-card-front">
           <img
-            src={movie.moviePoster.imgUrl}
+            src={movie.moviePoster}
             alt="Poster"
             style={{ width: 300, height: 300 }}
             onError={(e) => {
@@ -23,7 +24,7 @@ export const MovieFlip = (props) => {
         >
           <div style={{ position: "absolute", top: 0, left: 0 }}>
             <img
-              src={movie.moviePoster.imgUrl}
+              src={movie.moviePoster}
               alt="Avatar"
               style={{ width: 300, height: 300 }}
               onError={(e) => {
@@ -55,15 +56,12 @@ export const MovieFlip = (props) => {
         </div>
       </div>
 
-      <div
-        // onClick={() => {
-        //   history.push(`/detail/${item.maPhim}`);
-        // }}
-
+      <NavLink
+        to={`/detail-movie/${movie.movieId}`}
         className="bg-orange-300 text-center cursor-pointer py-3 mt-1 text-black font-bold flex justify-center items-center hover:bg-red-500 duration-500 hover:text-white "
       >
         <ShoppingCartOutlined className="text-2xl mr-2 " /> ĐẶT VÉ NGAY
-      </div>
+      </NavLink>
     </div>
   );
 };

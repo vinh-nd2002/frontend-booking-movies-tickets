@@ -1,10 +1,10 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { Tabs } from "antd";
+import { HomeSchedule } from "./HomeSchedule/HomeSchedule";
 
 const { TabPane } = Tabs;
 export const HomeMenu = (props) => {
   const { cineplexs } = props;
-
   const renderCinemas = (cinemas, imgUrl) => {
     return cinemas.map((cinemaItem, index) => {
       return (
@@ -30,30 +30,34 @@ export const HomeMenu = (props) => {
             </div>
           }
           key={index}
-        ></TabPane>
+        >
+          {cinemaItem.rooms?.map((roomItem, key) => {
+            return (
+              <Fragment key={key}>
+                <HomeSchedule room={roomItem} />
+              </Fragment>
+            );
+          })}
+        </TabPane>
       );
     });
   };
   const renderCineplexs = () => {
     return cineplexs?.map((cineplexItem, index) => {
-      console.log(cineplexItem);
       return (
         <TabPane
           tab={
             <img
-              src={cineplexItem.cineplexLogo.imgUrl}
+              src={cineplexItem.cineplexLogo}
               alt="tab"
               className="rounded-md"
-              style={{ width: "150px", height: "150px" }}
+              style={{ width: "100px", height: "100px" }}
             />
           }
           key={index}
         >
           <Tabs tabPosition="left">
-            {renderCinemas(
-              cineplexItem.cinemas,
-              cineplexItem.cineplexLogo.imgUrl
-            )}
+            {renderCinemas(cineplexItem.cinemas, cineplexItem.cineplexLogo)}
           </Tabs>
         </TabPane>
       );

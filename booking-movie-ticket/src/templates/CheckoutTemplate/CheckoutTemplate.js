@@ -1,22 +1,25 @@
 import React, { Fragment } from "react";
-import { Route } from "react-router-dom";
-import { Header } from "./Layout/Header/Header";
-import { Footer } from "./Layout/Footer/Footer";
+import { Redirect, Route } from "react-router-dom";
+import { TOKEN } from "../../utils/settings/config";
 
-export const HomeTemplate = (props) => {
+const CheckoutTemplate = (props) => {
   const { Component, ...restProps } = props;
+
+  if (!localStorage.getItem(TOKEN)) {
+    return <Redirect to="/login" exact />;
+  }
   return (
     <Route
       {...restProps}
       render={(propsRoute) => {
         return (
           <Fragment>
-            <Header {...propsRoute} />
             <Component {...propsRoute} />
-            <Footer {...propsRoute} />
           </Fragment>
         );
       }}
     />
   );
 };
+
+export default CheckoutTemplate;

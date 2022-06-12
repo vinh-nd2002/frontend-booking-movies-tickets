@@ -1,7 +1,7 @@
-import { baseApi } from "./baseApi";
+import Api from "./baseApi";
 
 const getAllCineplexs = () => {
-  return baseApi("GET", "/cineplexs");
+  return Api.get("/cineplexs");
 };
 
 export const CineplexService = {

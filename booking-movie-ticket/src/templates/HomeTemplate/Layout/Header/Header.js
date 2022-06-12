@@ -43,10 +43,13 @@ export const Header = (props) => {
           </li>
         </ul>
         <div className="items-center flex-shrink-0 hidden lg:flex">
-          <button className="self-center px-8 py-3 rounded">Sign in</button>
-          <button className="self-center px-8 py-3 font-semibold rounded dark:bg-violet-400 dark:text-coolGray-900">
+          <NavLink to="/login" className="text-white font-semibold px-8 py-3">
+            Sign in
+          </NavLink>
+          <NavLink
+            to="/register" className="text-white font-semibold px-8 py-3">
             Sign up
-          </button>
+          </NavLink>
         </div>
         <button className="p-4 lg:hidden">
           <svg

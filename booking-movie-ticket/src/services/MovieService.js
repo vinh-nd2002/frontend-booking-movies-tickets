@@ -1,9 +1,14 @@
-import { baseApi } from "./baseApi";
+import Api from "./baseApi";
 
 const getAllMovies = () => {
-  return baseApi("GET", "/movies");
+  return Api.get("/movies");
+};
+
+const getMovieById = (id) => {
+  return Api.get(`/movies/${id}`);
 };
 
 export const MovieService = {
   getAllMovies,
+  getMovieById,
 };

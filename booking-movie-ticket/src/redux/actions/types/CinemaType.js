@@ -1,1 +1,2 @@
 export const GET_ALL_CINEMA = "GET_ALL_CINEMA";
+export const GET_CINEMA_DETAIL = "GET_CINEMA_DETAIL";

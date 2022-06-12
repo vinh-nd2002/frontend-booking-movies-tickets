@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAllMovieAction } from "../../redux/actions/MovieAction";
 import { MovieSlick } from "../../components/MovieSlick/MovieSlick";
 import { getAllCineplexAction } from "../../redux/actions/CineplexAction";
+import { HomeCarousel } from "../../templates/HomeTemplate/Layout/HomeCarousel/HomeCarousel";
 export const Home = () => {
   const { movies } = useSelector((state) => state.MovieReducer);
   const { cineplexs } = useSelector((state) => state.CineplexReducer);
@@ -16,6 +17,7 @@ export const Home = () => {
   }, []);
   return (
     <div>
+      <HomeCarousel />
       <section className="text-gray-600 body-font">
         <div className="container px-5 py-20">
           <MovieSlick movies={movies} />

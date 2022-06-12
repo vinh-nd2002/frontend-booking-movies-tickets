@@ -14,6 +14,7 @@ export const HomeCarousel = (props) => {
     backgroundSize: "cover",
     backgroundRepeat: "no-repeat",
     dots: false,
+    autoplay: true,
   };
 
   const { moviesDefault } = useSelector((state) => state.MovieReducer);
@@ -31,7 +32,7 @@ export const HomeCarousel = (props) => {
             style={{
               ...contentStyle,
               backgroundImage: `url(
-                ${item.moviePoster.imgUrl}
+                ${item.moviePoster}
               )`,
             }}
           >

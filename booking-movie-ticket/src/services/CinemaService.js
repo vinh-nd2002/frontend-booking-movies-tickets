@@ -4,6 +4,11 @@ const getAllCinemas = () => {
   return baseApi("GET", "/cinemas");
 };
 
-export const MovieService = {
+const getCinemaById = (id) => {
+  return baseApi("GET", `/cinemas/${id}`);
+};
+
+export const CinemaService = {
   getAllCinemas,
+  getCinemaById,
 };

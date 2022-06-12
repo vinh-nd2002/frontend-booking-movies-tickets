@@ -1,5 +1,6 @@
 import {
   GET_ALL_MOVIE,
+  GET_MOVIE_BY_ID,
   SET_MOVIE_COMING_SOON,
   SET_MOVIE_PLAYING,
 } from "../actions/types/MovieType";
@@ -10,6 +11,7 @@ const stateDefault = {
   movieComingSoon: false,
   statusMovieDefault: true,
   moviesDefault: [],
+  movieDetail: {},
 };
 
 export const MovieReducer = (state = stateDefault, action) => {
@@ -34,6 +36,9 @@ export const MovieReducer = (state = stateDefault, action) => {
       state.movies = state.moviesDefault.filter(
         (movieItem) => movieItem.movieStatus === state.movieComingSoon
       );
+      return { ...state };
+    case GET_MOVIE_BY_ID:
+      state.movieDetail = action.value;
       return { ...state };
     default:
       return { ...state };
