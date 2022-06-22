@@ -30,7 +30,6 @@ export const Checkout = (props) => {
   let arrBookedSeats = { ...scheduleMovieDetail.tickets };
 
   const dispatch = useDispatch();
-
   const connect = () => {
     let Sock = new SockJS("http://localhost:8080/ws");
     stompClient = over(Sock);
@@ -40,60 +39,64 @@ export const Checkout = (props) => {
         stompClient.subscribe(
           `/schedule-movie/${props.match.params.id}`,
           (payload) => {
-            console.log("payload.body", payload.body);
-            if (payload.body === "success") {
-              dispatch(getScheduleMovieDetailAction(props.match.params.id));
-            } else {
-              let payloadData = JSON.parse(payload.body);
+            let payloadData = JSON.parse(payload.body);
+            // Lọc các phần tử chỉ chứa ID của scheduleMovieId hiện tại
+            let arrCurrentScheduleMovie = payloadData.filter(
+              (item) =>
+                item.scheduleMovieId !== scheduleMovieDetail.scheduleMovieId
+            );
 
-              // Lọc các phần tử chỉ chứa ID của scheduleMovieId hiện tại
-              let arrCurrentScheduleMovie = payloadData.filter(
-                (item) =>
-                  item.scheduleMovieId !== scheduleMovieDetail.scheduleMovieId
-              );
+            // Bỏ mình ra khỏi danh sách
+            let resultTemp = arrCurrentScheduleMovie.filter(
+              (item) => item.username !== userLogin.username
+            );
 
-              // Bỏ mình ra khỏi danh sách
-              let resultTemp = arrCurrentScheduleMovie.filter(
-                (item) => item.username !== userLogin.username
-              );
+            if (resultTemp.length !== 0) {
+              // Lọc username district
+              let arrOtherDistrict = [];
 
-              if (resultTemp.length !== 0) {
-                // Lọc username district
-                let arrOtherDistrict = [];
+              resultTemp.forEach((element) => {
+                arrOtherDistrict.push(element.username);
+              });
 
-                resultTemp.forEach((element) => {
-                  arrOtherDistrict.push(element.username);
-                });
+              arrOtherDistrict = _.uniq(arrOtherDistrict);
 
-                arrOtherDistrict = _.uniq(arrOtherDistrict);
+              // Lọc các ghế mà other user đang chọn\
 
-                // Lọc các ghế mà other user đang chọn\
+              let arrOtherBookingSeats = [];
 
-                let arrOtherBookingSeats = [];
-
-                arrOtherDistrict.forEach((element) => {
-                  arrOtherBookingSeats.push(
-                    _.findLast(
-                      arrCurrentScheduleMovie,
-                      (item) => item.username === element
-                    )
-                  );
-                });
-
-                // Gộp danh sách tất cả các ghế do other user đang chọn
-                let arrOtherSeats = arrOtherBookingSeats.reduce(
-                  (result, item, index) => {
-                    let arrSeat = item.seats;
-                    return [...result, ...arrSeat];
-                  },
-                  []
+              arrOtherDistrict.forEach((element) => {
+                arrOtherBookingSeats.push(
+                  _.findLast(
+                    arrCurrentScheduleMovie,
+                    (item) => item.username === element
+                  )
                 );
-                arrOtherSeats = _.unionBy(arrOtherSeats, "seatId");
+              });
 
-                // Đưa lên redux
-                dispatch(otherUserBookingSeatAction(arrOtherSeats));
-              }
+              // Gộp danh sách tất cả các ghế do other user đang chọn
+              let arrOtherSeats = arrOtherBookingSeats.reduce(
+                (result, item, index) => {
+                  let arrSeat = item.seats;
+                  return [...result, ...arrSeat];
+                },
+                []
+              );
+              arrOtherSeats = _.unionBy(arrOtherSeats, "seatId");
+
+              // Đưa lên redux
+              dispatch(otherUserBookingSeatAction(arrOtherSeats));
+            } else {
+              // Đưa lên redux
+              let arrOtherSeats = [];
+              dispatch(otherUserBookingSeatAction(arrOtherSeats));
             }
+          }
+        );
+        stompClient.subscribe(
+          `/schedule-movie/${props.match.params.id}/success`,
+          () => {
+            dispatch(getScheduleMovieDetailAction(props.match.params.id));
           }
         );
 
@@ -112,6 +115,7 @@ export const Checkout = (props) => {
     );
   };
   useEffect(() => {
+    console.log("abcF");
     dispatch(getAllSeatsAction());
     dispatch(getScheduleMovieDetailAction(props.match.params.id));
     connect();
@@ -129,6 +133,7 @@ export const Checkout = (props) => {
         username: userLogin.username,
       };
 
+      console.log("seatBooking", seatBooking);
       if (stompClient) {
         stompClient.send(
           "/booking/reset-seats",

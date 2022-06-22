@@ -20,7 +20,6 @@ export const BookingReducer = (state = stateDefault, action) => {
       return { ...state };
     case GET_SCHEDULE_MOVIE_DETAIL:
       state.scheduleMovieDetail = action.value;
-      state.test++;
       return { ...state };
     case BOOKING_SEAT:
       let updateSeat = [...state.arrChoosingSeat];

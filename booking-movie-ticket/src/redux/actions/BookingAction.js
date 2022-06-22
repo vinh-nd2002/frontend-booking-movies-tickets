@@ -100,17 +100,23 @@ export const bookingTicketsAction = (
         {},
         JSON.stringify(bookingTicketForm)
       );
-
       await dispatch({
         type: BOOKING_SEATS_SUCCESS,
         value: [],
       });
+      // stompClient.send(
+      //   "/booking/booking-success",
+      //   {},
+      //   JSON.stringify(scheduleMovieId)
+      // );
 
-      stompClient.send(
-        "/booking/booking-success",
-        {},
-        JSON.stringify(scheduleMovieId)
-      );
+      setTimeout(() => {
+        stompClient.send(
+          "/booking/booking-success",
+          {},
+          JSON.stringify(scheduleMovieId)
+        );
+      }, 50);
     }
   };
 };
