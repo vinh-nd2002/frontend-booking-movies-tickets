@@ -1,4 +1,6 @@
+import { openNotificationWithIcon } from "../../components/Notification/Notification";
 import { stompClient } from "../../pages/Checkout/Checkout";
+import { SUCCESS } from "../../utils/settings/config";
 import { BookingService } from "./../../services/BookingService";
 import {
   BOOKING_SEAT,
@@ -104,11 +106,6 @@ export const bookingTicketsAction = (
         type: BOOKING_SEATS_SUCCESS,
         value: [],
       });
-      // stompClient.send(
-      //   "/booking/booking-success",
-      //   {},
-      //   JSON.stringify(scheduleMovieId)
-      // );
 
       setTimeout(() => {
         stompClient.send(
@@ -117,6 +114,7 @@ export const bookingTicketsAction = (
           JSON.stringify(scheduleMovieId)
         );
       }, 50);
+      openNotificationWithIcon(SUCCESS, "Đặt vé thành công", "success");
     }
   };
 };

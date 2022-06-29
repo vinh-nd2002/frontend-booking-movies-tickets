@@ -26,7 +26,7 @@ export const Login = (props) => {
       var body = new FormData();
       body.append("username", values.username);
       body.append("password", values.password);
-      dispatch(loginAction(body));
+      dispatch(loginAction(body, props));
     },
   });
 

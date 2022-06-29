@@ -1,5 +1,5 @@
 import { TOKEN, USER_LOGIN } from "../../utils/settings/config";
-import { LOGIN } from "../actions/types/UserType";
+import { LOGIN, LOGOUT } from "../actions/types/UserType";
 
 let user = {};
 if (localStorage.getItem(USER_LOGIN)) {
@@ -16,6 +16,13 @@ export const UserReducer = (state = stateDefault, action) => {
       state.userLogin = action.value;
       localStorage.setItem(USER_LOGIN, JSON.stringify(state.userLogin));
       localStorage.setItem(TOKEN, action.value.accessToken);
+      return { ...state };
+    }
+
+    case LOGOUT: {
+      localStorage.removeItem(USER_LOGIN);
+      localStorage.removeItem(TOKEN);
+      state.userLogin = action.value;
       return { ...state };
     }
     default:

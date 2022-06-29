@@ -2,3 +2,4 @@ export const GET_ALL_MOVIE = "GET_ALL_MOVIE";
 export const GET_MOVIE_BY_ID = "GET_MOVIE_BY_ID";
 export const SET_MOVIE_PLAYING = "SET_MOVIE_PLAYING";
 export const SET_MOVIE_COMING_SOON = "SET_MOVIE_COMING_SOON";
+export const CREATE_MOVIE = "CREATE_MOVIE";

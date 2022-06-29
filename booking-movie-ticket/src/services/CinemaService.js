@@ -1,11 +1,11 @@
-import { baseApi } from "./baseApi";
+import Api from "./baseApi";
 
 const getAllCinemas = () => {
-  return baseApi("GET", "/cinemas");
+  return Api.get("/cinemas");
 };
 
 const getCinemaById = (id) => {
-  return baseApi("GET", `/cinemas/${id}`);
+  return Api.get(`/cinemas/${id}`);
 };
 
 export const CinemaService = {
