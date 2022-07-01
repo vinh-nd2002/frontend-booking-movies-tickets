@@ -22,6 +22,7 @@ export const MovieDetail = (props) => {
   useEffect(() => {
     dispatch(getMovieByIdAction(id));
     dispatch(getAllCineplexAction());
+    window.scrollTo(0, 0);
   }, []);
 
   const renderSchedules = (room) => {

@@ -57,7 +57,7 @@ export const MovieFlip = (props) => {
       </div>
 
       <NavLink
-        to={`/detail-movie/${movie.movieId}`}
+        to={`/movie-detail/${movie.movieId}`}
         className="bg-orange-300 text-center cursor-pointer py-3 mt-1 text-black font-bold flex justify-center items-center hover:bg-red-500 duration-500 hover:text-white "
       >
         <ShoppingCartOutlined className="text-2xl mr-2 " /> ĐẶT VÉ NGAY

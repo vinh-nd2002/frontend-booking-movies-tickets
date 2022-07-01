@@ -1,11 +1,12 @@
 import { Fragment, useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Redirect, Route } from "react-router";
 import { Layout, Menu, Breadcrumb, Dropdown, Space } from "antd";
-import { DesktopOutlined, FileOutlined, UserOutlined } from "@ant-design/icons";
+import { FileOutlined, UserOutlined } from "@ant-design/icons";
 import { NavLink } from "react-router-dom";
 // import _ from "lodash";
 import { USER_LOGIN } from "../../utils/settings/config";
+import { logoutAction } from "../../redux/actions/UserActions";
 
 const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
@@ -13,7 +14,7 @@ const { SubMenu } = Menu;
 const AdminTemplate = (props) => {
   const { Component, ...restProps } = props;
   const { userLogin } = useSelector((state) => state.UserReducer);
-
+  const dispatch = useDispatch();
   const [collapsed, setCollapsed] = useState(false);
 
   const onCollapse = (collapsed) => {
@@ -63,15 +64,15 @@ const AdminTemplate = (props) => {
       key: "4",
       danger: true,
       label: (
-        <button
-          className="font-bold "
+        <NavLink
+          className="font-bold hover:!text-red-600 duration-500"
+          to="/login"
           onClick={() => {
-            localStorage.removeItem(USER_LOGIN);
-            props.history.push("/login");
+            dispatch(logoutAction());
           }}
         >
           LOGOUT
-        </button>
+        </NavLink>
       ),
     },
   ];
@@ -142,7 +143,7 @@ const AdminTemplate = (props) => {
                   </div>
                 </Content>
                 <Footer style={{ textAlign: "center" }}>
-                  Ant Design ©2018 Created by Ant UED
+                  Ant Design ©2018 Created by 500 Server Error
                 </Footer>
               </Layout>
             </Layout>

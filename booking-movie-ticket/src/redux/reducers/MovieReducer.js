@@ -26,7 +26,7 @@ export const MovieReducer = (state = stateDefault, action) => {
       state.movieComingSoon = true;
       state.moviePlaying = true;
       state.movies = state.moviesDefault.filter(
-        (movieItem) => movieItem.movieStatus === state.moviePlaying
+        (movieItem) => movieItem.movieStatus === false
       );
       return { ...state };
     case SET_MOVIE_COMING_SOON:
@@ -34,7 +34,7 @@ export const MovieReducer = (state = stateDefault, action) => {
       state.moviePlaying = false;
       state.movieComingSoon = false;
       state.movies = state.moviesDefault.filter(
-        (movieItem) => movieItem.movieStatus === state.movieComingSoon
+        (movieItem) => movieItem.movieStatus === true
       );
       return { ...state };
     case GET_MOVIE_BY_ID:

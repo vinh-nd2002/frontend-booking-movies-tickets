@@ -36,7 +36,7 @@ export const MovieSlick = (props) => {
     (state) => state.MovieReducer
   );
   const renderMovieSlick = () => {
-    return props.movies.slice(0, 16).map((item, index) => {
+    return props.movies.map((item, index) => {
       return (
         <div key={index} className={`${styleSlick["width-item"]}`}>
           <MovieFlip movie={item} />
@@ -63,7 +63,6 @@ export const MovieSlick = (props) => {
     infinite: true,
     slidesToShow: 3.5,
     speed: 500,
-    rows: 1,
     autoplay: true,
     autoplaySpeed: 3000,
     slidesPerRow: 2,

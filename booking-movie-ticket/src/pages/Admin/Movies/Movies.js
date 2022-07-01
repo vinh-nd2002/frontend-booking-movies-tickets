@@ -13,7 +13,6 @@ import {
   deleteMovieByIdAction,
   getAllMovieAction,
 } from "../../../redux/actions/MovieAction";
-import { values } from "lodash";
 
 export default function Movies(props) {
   const { moviesDefault } = useSelector((state) => state.MovieReducer);
@@ -116,7 +115,7 @@ export default function Movies(props) {
             <NavLink
               key={1}
               className=" mr-2  text-2xl"
-              to={`/admin/movies/edit/${movie.movieId}`}
+              to={`/admin/movies/update/${movie.movieId}`}
             >
               <EditOutlined style={{ color: "blue" }} />
             </NavLink>

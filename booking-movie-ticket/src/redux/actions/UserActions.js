@@ -5,7 +5,6 @@ import { ERROR, SUCCESS } from "../../utils/settings/config";
 
 export const loginAction = (userLogin, propsRoute) => {
   return async (dispatch) => {
-    console.log("propsRoute", propsRoute);
     try {
       const result = await UserService.login(userLogin);
       dispatch({

@@ -35,11 +35,11 @@ export const SchedulesMovie = (props) => {
             <img
               src={movieItem.moviePoster}
               alt={movieItem.movieName}
-              style={{ width: "250px", height: "150px" }}
+              style={{ width: "100px", height: "150px" }}
             />
             <div className="ml-10">
               <NavLink
-                to={`/detail-movie/${movieItem.movieId}`}
+                to={`/movie-detail/${movieItem.movieId}`}
                 className=" text-gray-600 hover:text-red-600 font-bold text-lg duration-500"
               >
                 {movieItem.movieName}

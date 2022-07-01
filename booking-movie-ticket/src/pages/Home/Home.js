@@ -10,6 +10,7 @@ import { HomeCarousel } from "../../templates/HomeTemplate/Layout/HomeCarousel/H
 export const Home = () => {
   const { movies } = useSelector((state) => state.MovieReducer);
   const { cineplexs } = useSelector((state) => state.CineplexReducer);
+  console.log("movies", movies);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getAllMovieAction());

@@ -60,3 +60,15 @@ export const createMovieAction = (formData) => {
     }
   };
 };
+
+export const updateMovieAction = (formData, id) => {
+  return async (dispatch) => {
+    try {
+      await MovieService.updateMovie(formData, id);
+      openNotificationWithIcon(SUCCESS, "Đã sửa thành công", "success");
+      dispatch(getAllMovieAction());
+    } catch (error) {
+      console.log("error>>", error);
+    }
+  };
+};

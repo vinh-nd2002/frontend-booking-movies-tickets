@@ -17,6 +17,7 @@ import Dashboard from "./pages/Admin/Dashboard/Dashboard";
 import Movies from "./pages/Admin/Movies/Movies";
 import AddNew from "./pages/Admin/Movies/AddNew";
 import ShowTime from "./pages/Admin/Showtime/Showtime";
+import Edit from "./pages/Admin/Movies/Edit";
 export const history = createBrowserHistory();
 
 function App() {
@@ -38,6 +39,7 @@ function App() {
         exact
         Component={ShowTime}
       />
+      <AdminTemplate path="/admin/movies/update/:id" exact Component={Edit} />
     </Switch>
   );
 }
