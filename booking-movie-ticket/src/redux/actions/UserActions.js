@@ -33,3 +33,14 @@ export const logoutAction = () => {
     openNotificationWithIcon(SUCCESS, "Logout thành công", "success");
   };
 };
+
+export const registerAction = (body) => {
+  return async (dispatch) => {
+    try {
+      const result = UserService.register(body);
+    } catch (error) {
+      openNotificationWithIcon(ERROR, "Đăng ký thất bại", "error");
+      console.log("error>>", error);
+    }
+  };
+};

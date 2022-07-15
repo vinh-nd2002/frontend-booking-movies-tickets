@@ -115,7 +115,6 @@ export const Checkout = (props) => {
     );
   };
   useEffect(() => {
-    console.log("abcF");
     dispatch(getAllSeatsAction());
     dispatch(getScheduleMovieDetailAction(props.match.params.id));
     connect();

@@ -1,5 +1,5 @@
 import { createBrowserHistory } from "history";
-import { Switch } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import "./App.css";
 import { HomeTemplate } from "./templates/HomeTemplate/HomeTemplate";
 import { UserTemplate } from "./templates/UserTemplate/UserTemplate";
@@ -27,8 +27,8 @@ function App() {
       <HomeTemplate exact path="/contact" Component={Contact} />
       <HomeTemplate exact path="/news" Component={News} />
       <HomeTemplate exact path="/movie-detail/:id" Component={MovieDetail} />
-      <UserTemplate exact path="/login" Component={Login} />
-      <UserTemplate exact path="/register" Component={Register} />
+      <Route exact path="/login" component={Login} />
+      <Route exact path="/register" component={Register} />
       <HomeTemplate exact path="/home" Component={Home} />
       <CheckoutTemplate path="/checkout/:id" exact Component={Checkout} />
       <AdminTemplate path="/admin" exact Component={Dashboard} />

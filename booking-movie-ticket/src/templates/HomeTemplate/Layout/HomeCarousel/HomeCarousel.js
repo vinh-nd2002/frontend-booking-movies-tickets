@@ -1,50 +1,85 @@
-import React, { useEffect } from "react";
-import { Carousel } from "antd";
-import { useDispatch, useSelector } from "react-redux";
-import { getAllMovieAction } from "../../../../redux/actions/MovieAction";
+import React from "react";
+import Slider from "react-slick";
+import { RightOutlined, LeftOutlined } from "@ant-design/icons";
 import "./HomeCarousel.css";
+import HomeCarouselData from "../../../../utils/constants/HomeCarouseData";
 
 export const HomeCarousel = (props) => {
-  const contentStyle = {
-    height: "600px",
-    color: "#fff",
-    lineHeight: "160px",
-    textAlign: "center",
-    background: "#364d79",
-    backgroundSize: "cover",
-    backgroundRepeat: "no-repeat",
-    dots: false,
-    autoplay: true,
+  function NextArrow(props) {
+    const { onClick } = props;
+    return (
+      <RightOutlined
+        onClick={onClick}
+        style={{
+          position: "absolute",
+          right: "15px",
+          top: "48%",
+          fontSize: "3rem",
+          transform: "translateY(-50%)",
+          width: 50,
+          height: 100,
+          color: "#d8d8d8",
+          cursor: "pointer",
+          transition: "all .2s",
+          zIndex: 2,
+        }}
+      />
+    );
+  }
+
+  function PrevArrow(props) {
+    const { onClick } = props;
+    return (
+      <LeftOutlined
+        onClick={onClick}
+        style={{
+          position: "absolute",
+          left: "15px",
+          top: "48%",
+          fontSize: "3rem",
+          transform: "translateY(-50%)",
+          width: 50,
+          height: 100,
+          color: "#d8d8d8",
+          cursor: "pointer",
+          transition: "all .2s",
+          zIndex: 2,
+        }}
+      />
+    );
+  }
+  const settings = {
+    dots: true,
+    infinite: true,
+    autoplaySpeed: 5000,
+    autoplay: false,
+    speed: 500,
+    swipeToSlide: true,
+    nextArrow: <NextArrow />,
+    prevArrow: <PrevArrow />,
   };
 
-  const { moviesDefault } = useSelector((state) => state.MovieReducer);
-
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(getAllMovieAction());
-  }, []);
-
-  const renderCarousel = () => {
-    return moviesDefault?.map((item, key) => {
-      return (
-        <div key={key}>
-          <div
-            style={{
-              ...contentStyle,
-              backgroundImage: `url(
-                ${item.moviePoster}
-              )`,
-            }}
-          >
-            <img
-              src="https://image.lag.vn/upload/news/22/04/18/0C355D0B-DA83-429B-8BE3-F0200DE8A28F_NYIR.jpeg"
-              className="w-full opacity-0"
-              alt="carousel"
-            />
-          </div>
-        </div>
-      );
-    });
-  };
-  return <Carousel autoplay>{renderCarousel()}</Carousel>;
+  return (
+    <div id="carousel" className="relative" style={{ zIndex: 1 }}>
+      <Slider {...settings}>
+        {HomeCarouselData.map((item, index) => {
+          return (
+            <div key={index} className="relative">
+              <img
+                src={item?.moviePoster}
+                alt="item"
+                className="w-full h-full"
+              />
+              <div
+                className="absolute w-full h-full top-0"
+                style={{
+                  background: "linear-gradient(to top,#000,transparent 20%)",
+                }}
+              />
+            </div>
+          );
+        })}
+      </Slider>
+    </div>
+  );
 };

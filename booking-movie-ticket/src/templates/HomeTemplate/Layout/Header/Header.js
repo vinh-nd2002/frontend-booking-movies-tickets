@@ -1,11 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { Dropdown, Menu, Space } from "antd";
 import Button from "../../../../components/Button/Button";
 import { USER_LOGIN } from "../../../../utils/settings/config";
 import { useDispatch } from "react-redux";
 import { logoutAction } from "../../../../redux/actions/UserActions";
-
+import styleHeader from "./Header.module.css";
 export const Header = (props) => {
   const dispatch = useDispatch();
   let userLogin = JSON.parse(localStorage.getItem(USER_LOGIN));
@@ -60,73 +60,159 @@ export const Header = (props) => {
     <Dropdown overlay={menuDropdown}>
       <Space>
         Hello,
-        <NavLink to="/profile" className="!text-black !font-bold">
+        <NavLink to="/profile" className="!text-white !font-bold">
           {userLogin.username}
         </NavLink>
       </Space>
     </Dropdown>
   );
+  useEffect(() => {
+    const onScroll = () => {
+      if (
+        document.body.scrollTop > 150 ||
+        document.documentElement.scrollTop > 150
+      ) {
+        // translate(-50%,0)
+        document.getElementById("headerFixed").style.transform =
+          "translateY(0)";
+      } else {
+        document.getElementById("headerFixed").style.transform =
+          "translateY(-100%)";
+      }
+    };
+    // clean up code
+    window.removeEventListener("scroll", onScroll);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   return (
-    <header className=" bg-white bg-opacity-40 fixed w-full z-20">
-      <div className="container flex justify-between h-16 mx-auto text-white">
-        <NavLink
-          to="/"
-          aria-label="Back to homepage"
-          className="flex items-center p-2"
-        >
-          <img
-            src="https://cyberlearn.vn/wp-content/uploads/2020/03/cyberlearn-min-new-opt2.png"
-            alt="logo"
-          />
-        </NavLink>
-        <ul className="items-stretch hidden space-x-3 lg:flex">
-          <li className="flex">
-            <NavLink
-              to="/home"
-              className="flex items-center px-4 -mb-1 border-b-2 dark:border-transparent dark:text-violet-400 dark:border-violet-400
-              text-white"
-            >
-              Trang Chủ
-            </NavLink>
-          </li>
-          <li className="flex">
-            <NavLink
-              to="/news"
-              className="flex items-center px-4 -mb-1 border-b-2 dark:border-transparent text-white"
-            >
-              News
-            </NavLink>
-          </li>
-          <li className="flex">
-            <NavLink
-              to="contact"
-              className="flex items-center px-4 -mb-1 border-b-2 dark:border-transparent text-white"
-            >
-              Contact
-            </NavLink>
-          </li>
-        </ul>
-        {userLogin ? (
-          dropdownHeader()
-        ) : (
-          <div className="items-center flex-shrink-0 grid grid-cols-2 gap-2">
-            <Button
-              textContent="Login"
-              className="w-full !rounded-none col-span-1"
-              onClick={() => {
-                props.history.push("/login");
-              }}
-            ></Button>
-            <Button
-              textContent="Register"
-              className="w-full !rounded-none col-span-1"
-              onClick={() => {
-                props.history.push("/register");
-              }}
-            ></Button>
-          </div>
-        )}
-      </div>
-    </header>
+    <>
+      <header className="absolute w-full z-10 ">
+        <div className="container flex justify-between h-16 mx-auto text-white">
+          <NavLink to="/" className="flex items-center p-2 ">
+            <img src="/logo.svg" alt="logo" />
+          </NavLink>
+          <ul className="flex">
+            <li className={`${styleHeader["line"]} `}>
+              <NavLink
+                to="/home"
+                className=" px-5 py-6 
+                text-white hover:text-white font-bold"
+                style={{ lineHeight: 4 }}
+              >
+                TRANG CHỦ
+              </NavLink>
+            </li>
+            <li className={`${styleHeader["line"]} `}>
+              <NavLink
+                to="/news"
+                className=" px-5 py-6 
+                text-white hover:text-white font-bold"
+                style={{ lineHeight: 4 }}
+              >
+                NEWS
+              </NavLink>
+            </li>
+            <li className={`${styleHeader["line"]} `}>
+              <NavLink
+                to="/contact"
+                className=" px-5 py-6 
+                text-white hover:text-white font-bold"
+                style={{ lineHeight: 4 }}
+              >
+                CONTACT
+              </NavLink>
+            </li>
+          </ul>
+          {userLogin ? (
+            dropdownHeader()
+          ) : (
+            <div className="items-center flex-shrink-0 grid grid-cols-2 gap-2">
+              <Button
+                textContent="Login"
+                className="w-full !rounded-none col-span-1"
+                onClick={() => {
+                  props.history.push("/login");
+                }}
+              ></Button>
+              <Button
+                textContent="Register"
+                className="w-full !rounded-none col-span-1"
+                onClick={() => {
+                  props.history.push("/register");
+                }}
+              ></Button>
+            </div>
+          )}
+        </div>
+      </header>
+      <header
+        id="headerFixed"
+        className="fixed w-full bg-black z-20 top-0"
+        style={{
+          transform: "translateY(-100%)",
+          transition: "transform 0.5s",
+        }}
+      >
+        <div className="container flex justify-between h-16 mx-auto text-white">
+          <NavLink to="/" className="flex items-center p-2 ">
+            <img src="/logo.svg" alt="logo" />
+          </NavLink>
+          <ul className="flex">
+            <li className={`${styleHeader["line"]}`}>
+              <NavLink
+                to="/home"
+                className=" px-5 py-6  
+                text-white hover:text-white font-bold"
+                style={{ lineHeight: 4 }}
+              >
+                TRANG CHỦ
+              </NavLink>
+            </li>
+            <li className={`${styleHeader["line"]} `}>
+              <NavLink
+                to="/news"
+                className=" px-5 py-6  
+                text-white hover:text-white font-bold"
+                style={{ lineHeight: 4 }}
+              >
+                NEWS
+              </NavLink>
+            </li>
+            <li className={`${styleHeader["line"]} `}>
+              <NavLink
+                to="/contact"
+                className=" px-5 py-6 
+                text-white hover:text-white font-bold"
+                style={{ lineHeight: 4 }}
+              >
+                CONTACT
+              </NavLink>
+            </li>
+          </ul>
+          {userLogin ? (
+            dropdownHeader()
+          ) : (
+            <div className="items-center flex-shrink-0 grid grid-cols-2 gap-2">
+              <Button
+                textContent="Login"
+                className="w-full !rounded-none col-span-1"
+                onClick={() => {
+                  props.history.push("/login");
+                }}
+              ></Button>
+              <Button
+                textContent="Register"
+                className="w-full !rounded-none col-span-1"
+                onClick={() => {
+                  props.history.push("/register");
+                }}
+              ></Button>
+            </div>
+          )}
+        </div>
+      </header>
+    </>
   );
 };

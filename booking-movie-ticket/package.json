@@ -9,6 +9,7 @@
     "@tsamantanis/react-glassmorphism": "^1.1.2",
     "antd": "^4.20.1",
     "axios": "^0.27.2",
+    "font-awesome": "^4.7.0",
     "formik": "^2.2.9",
     "history": "^5.3.0",
     "lodash": "^4.17.21",
@@ -26,7 +27,6 @@
     "sockjs-client": "^1.5.2",
     "stompjs": "^2.3.3",
     "web-vitals": "^2.1.4",
-    "font-awesome": "^4.7.0",
     "yup": "^0.32.11"
   },
   "proxy": "http://localhost:8080",

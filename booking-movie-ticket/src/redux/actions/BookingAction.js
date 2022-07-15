@@ -14,6 +14,8 @@ export const getScheduleMovieDetailAction = (id) => {
   return async (dispatch) => {
     try {
       const result = await BookingService.getScheduleMovieById(id);
+
+      console.log("abc", result);
       dispatch({
         type: GET_SCHEDULE_MOVIE_DETAIL,
         value: result,
@@ -102,18 +104,21 @@ export const bookingTicketsAction = (
         {},
         JSON.stringify(bookingTicketForm)
       );
+
+      // Reset lại danh sách ghế đang chọn
       await dispatch({
         type: BOOKING_SEATS_SUCCESS,
         value: [],
       });
 
+      // Khoảng trễ để update lại database rồi mới báo thành công
       setTimeout(() => {
         stompClient.send(
           "/booking/booking-success",
           {},
           JSON.stringify(scheduleMovieId)
         );
-      }, 50);
+      }, 100);
       openNotificationWithIcon(SUCCESS, "Đặt vé thành công", "success");
     }
   };

@@ -143,7 +143,7 @@ export const MovieDetail = (props) => {
               <p className="text-gray-300 text-xs ">
                 Thời lượng phim:{" "}
                 <span className="italic text-white font-bold">
-                  {movieDetail.movieLenght}
+                  {movieDetail.movieLength}
                 </span>{" "}
                 phút
               </p>
