@@ -45,7 +45,7 @@ export const Header = (props) => {
               onClick={() => {
                 dispatch(logoutAction());
                 userLogin = {};
-                props.history.push("/login");
+                props.history.push("/auth/login");
               }}
             >
               LOGOUT
@@ -133,14 +133,14 @@ export const Header = (props) => {
                 textContent="Login"
                 className="w-full !rounded-none col-span-1"
                 onClick={() => {
-                  props.history.push("/login");
+                  props.history.push("/auth/login");
                 }}
               ></Button>
               <Button
                 textContent="Register"
                 className="w-full !rounded-none col-span-1"
                 onClick={() => {
-                  props.history.push("/register");
+                  props.history.push("/auth/register");
                 }}
               ></Button>
             </div>
@@ -199,14 +199,14 @@ export const Header = (props) => {
                 textContent="Login"
                 className="w-full !rounded-none col-span-1"
                 onClick={() => {
-                  props.history.push("/login");
+                  props.history.push("/auth/login");
                 }}
               ></Button>
               <Button
                 textContent="Register"
                 className="w-full !rounded-none col-span-1"
                 onClick={() => {
-                  props.history.push("/register");
+                  props.history.push("/auth/register");
                 }}
               ></Button>
             </div>

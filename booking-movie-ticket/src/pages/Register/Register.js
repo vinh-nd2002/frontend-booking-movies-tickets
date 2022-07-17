@@ -3,7 +3,7 @@ import { useFormik } from "formik";
 import moment from "moment";
 import { React, useState } from "react";
 import { useDispatch } from "react-redux";
-import { Redirect } from "react-router-dom";
+import { NavLink, Redirect } from "react-router-dom";
 import { registerAction } from "../../redux/actions/UserActions";
 import { USER_LOGIN } from "../../utils/settings/config";
 import { UserService } from "../../services/UserService";
@@ -30,9 +30,8 @@ export const Register = (props) => {
     },
 
     onSubmit: (values) => {
-      console.log(values);
       setVisible(true);
-      // dispatch(registerAction(values));
+      dispatch(registerAction(values));
     },
   });
 
@@ -77,11 +76,11 @@ export const Register = (props) => {
             visible={visible}
             onOk={() => {
               setVisible(false);
-              props.history.push("/login");
+              props.history.push("/auth/login");
             }}
             onCancel={() => {
               setVisible(false);
-              props.history.push("/login");
+              props.history.push("/auth/login");
             }}
             width={1000}
           >
@@ -98,6 +97,14 @@ export const Register = (props) => {
               nhận tài khoản!!
             </h1>
             <h1>Thân trọng!</h1>
+            <button
+              className="text-blue-600"
+              onClick={async () => {
+                await UserService.resendConfirmUser(formik.values.email);
+              }}
+            >
+              Tôi chưa nhận được gmail?
+            </button>
           </Modal>
           <Form
             labelCol={{
@@ -360,6 +367,7 @@ export const Register = (props) => {
               >
                 Register
               </button>
+              <NavLink to="/auth/login">Bạn đã có tài khoản?</NavLink>
             </Form.Item>
           </Form>
         </div>

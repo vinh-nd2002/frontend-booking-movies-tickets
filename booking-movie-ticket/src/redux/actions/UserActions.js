@@ -37,7 +37,13 @@ export const logoutAction = () => {
 export const registerAction = (body) => {
   return async (dispatch) => {
     try {
-      const result = UserService.register(body);
+      await UserService.register(body);
+      openNotificationWithIcon(
+        SUCCESS,
+        "Đăng ký tài khoản thành công",
+        "success"
+      );
+      // dispatch(getAllUsersAction())
     } catch (error) {
       openNotificationWithIcon(ERROR, "Đăng ký thất bại", "error");
       console.log("error>>", error);
