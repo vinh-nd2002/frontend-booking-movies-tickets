@@ -1,5 +1,10 @@
 import { UserService } from "../../services/UserService";
-import { LOGIN, LOGOUT } from "./types/UserType";
+import {
+  GET_ALL_USERS,
+  GET_USER_DETAIL,
+  LOGIN,
+  LOGOUT,
+} from "./types/UserType";
 import { openNotificationWithIcon } from "../../components/Notification/Notification";
 import { ERROR, SUCCESS } from "../../utils/settings/config";
 
@@ -43,7 +48,33 @@ export const registerAction = (body) => {
         "Đăng ký tài khoản thành công",
         "success"
       );
-      // dispatch(getAllUsersAction())
+      dispatch(getAllUsersAction());
+    } catch (error) {
+      openNotificationWithIcon(ERROR, "Đăng ký thất bại", "error");
+      console.log("error>>", error);
+    }
+  };
+};
+
+export const getAllUsersAction = () => {
+  return async (dispatch) => {
+    try {
+      const result = await UserService.getAllUsers();
+
+      dispatch({ type: GET_ALL_USERS, value: result });
+    } catch (error) {
+      openNotificationWithIcon(ERROR, "Đăng ký thất bại", "error");
+      console.log("error>>", error);
+    }
+  };
+};
+
+export const getProfileUserAction = (userId) => {
+  return async (dispatch) => {
+    try {
+      const result = await UserService.getProfile(userId);
+
+      dispatch({ type: GET_USER_DETAIL, value: result });
     } catch (error) {
       openNotificationWithIcon(ERROR, "Đăng ký thất bại", "error");
       console.log("error>>", error);

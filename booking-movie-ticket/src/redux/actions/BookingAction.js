@@ -14,8 +14,6 @@ export const getScheduleMovieDetailAction = (id) => {
   return async (dispatch) => {
     try {
       const result = await BookingService.getScheduleMovieById(id);
-
-      console.log("abc", result);
       dispatch({
         type: GET_SCHEDULE_MOVIE_DETAIL,
         value: result,

@@ -3,11 +3,17 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
 import * as Yup from "yup";
+import { openNotificationWithIcon } from "../../components/Notification/Notification";
 import { loginAction } from "../../redux/actions/UserActions";
 import { UserService } from "../../services/UserService";
+import { USER_LOGIN, WARNING } from "../../utils/settings/config";
 
 const bgAuth = "/img/bgAuth.jpg";
 export const Login = (props) => {
+  if (localStorage.getItem(USER_LOGIN)) {
+    openNotificationWithIcon(WARNING, "You are logged in", "warning");
+    props.history.push("/");
+  }
   const dispatch = useDispatch();
 
   const formik = useFormik({
@@ -60,7 +66,7 @@ export const Login = (props) => {
     >
       <div
         style={{
-          background: "white",
+          backgroundColor: "#f6f9fc",
           width: 800,
           height: "fit-content",
           borderRadius: 6,
@@ -154,8 +160,8 @@ export const Login = (props) => {
                 y2="40.615"
                 gradientUnits="userSpaceOnUse"
               >
-                <stop offset="0" stop-color="#2aa4f4" />
-                <stop offset="1" stop-color="#007ad9" />
+                <stop offset="0" stopColor="#2aa4f4" />
+                <stop offset="1" stopColor="#007ad9" />
               </linearGradient>
               <path
                 fill="url(#Ld6sqrtcxMyckEl6xeDdMa)"

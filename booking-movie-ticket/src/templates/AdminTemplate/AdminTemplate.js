@@ -45,14 +45,6 @@ const AdminTemplate = (props) => {
       ),
     },
     {
-      key: "2",
-      label: (
-        <NavLink to="/my-courses" className=" text-black">
-          My Courses
-        </NavLink>
-      ),
-    },
-    {
       key: "3",
       label: (
         <NavLink to="/settings" className=" text-black">
@@ -66,7 +58,7 @@ const AdminTemplate = (props) => {
       label: (
         <NavLink
           className="font-bold hover:!text-red-600 duration-500"
-          to="/login"
+          to="/auth/login"
           onClick={() => {
             dispatch(logoutAction());
           }}

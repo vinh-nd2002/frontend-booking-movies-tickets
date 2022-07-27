@@ -2,20 +2,24 @@ import React, { useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { Dropdown, Menu, Space } from "antd";
 import Button from "../../../../components/Button/Button";
-import { USER_LOGIN } from "../../../../utils/settings/config";
+import { USER_LOGIN, WARNING } from "../../../../utils/settings/config";
 import { useDispatch } from "react-redux";
 import { logoutAction } from "../../../../redux/actions/UserActions";
 import styleHeader from "./Header.module.css";
+import { openNotificationWithIcon } from "../../../../components/Notification/Notification";
 export const Header = (props) => {
   const dispatch = useDispatch();
-  let userLogin = JSON.parse(localStorage.getItem(USER_LOGIN));
+  const userLogin = JSON.parse(localStorage.getItem(USER_LOGIN));
   const menuDropdown = (
     <Menu
       items={[
         {
           key: "1",
           label: (
-            <NavLink to="/profile" className=" text-black">
+            <NavLink
+              to={`/profile/${userLogin?.userId}`}
+              className=" text-black font-semibold"
+            >
               Profile
             </NavLink>
           ),
@@ -23,28 +27,29 @@ export const Header = (props) => {
         {
           key: "2",
           label: (
-            <NavLink to="/my-courses" className=" text-black">
-              My Courses
-            </NavLink>
-          ),
-        },
-        {
-          key: "3",
-          label: (
-            <NavLink to="/settings" className=" text-black">
+            <NavLink
+              to="/"
+              className=" text-black font-semibold"
+              onClick={() => {
+                openNotificationWithIcon(
+                  WARNING,
+                  "Sorry this feature is being updated!!",
+                  "warning"
+                );
+              }}
+            >
               Settings
             </NavLink>
           ),
         },
         {
-          key: "4",
+          key: "3",
           danger: true,
           label: (
             <button
-              className="font-bold "
+              className="font-bold"
               onClick={() => {
                 dispatch(logoutAction());
-                userLogin = {};
                 props.history.push("/auth/login");
               }}
             >
@@ -60,7 +65,10 @@ export const Header = (props) => {
     <Dropdown overlay={menuDropdown}>
       <Space>
         Hello,
-        <NavLink to="/profile" className="!text-white !font-bold">
+        <NavLink
+          to={`/profile/${userLogin.userId}`}
+          className="!text-white !font-bold"
+        >
           {userLogin.username}
         </NavLink>
       </Space>
@@ -101,25 +109,39 @@ export const Header = (props) => {
                 text-white hover:text-white font-bold"
                 style={{ lineHeight: 4 }}
               >
-                TRANG CHỦ
+                HOME
               </NavLink>
             </li>
             <li className={`${styleHeader["line"]} `}>
               <NavLink
-                to="/news"
+                to="/"
                 className=" px-5 py-6 
                 text-white hover:text-white font-bold"
                 style={{ lineHeight: 4 }}
+                onClick={() => {
+                  openNotificationWithIcon(
+                    WARNING,
+                    "Sorry this feature is being updated!!",
+                    "warning"
+                  );
+                }}
               >
                 NEWS
               </NavLink>
             </li>
             <li className={`${styleHeader["line"]} `}>
               <NavLink
-                to="/contact"
+                to="/"
                 className=" px-5 py-6 
                 text-white hover:text-white font-bold"
                 style={{ lineHeight: 4 }}
+                onClick={() => {
+                  openNotificationWithIcon(
+                    WARNING,
+                    "Sorry this feature is being updated!!",
+                    "warning"
+                  );
+                }}
               >
                 CONTACT
               </NavLink>
@@ -167,25 +189,39 @@ export const Header = (props) => {
                 text-white hover:text-white font-bold"
                 style={{ lineHeight: 4 }}
               >
-                TRANG CHỦ
+                HOME
               </NavLink>
             </li>
             <li className={`${styleHeader["line"]} `}>
               <NavLink
-                to="/news"
+                to="/"
                 className=" px-5 py-6  
                 text-white hover:text-white font-bold"
                 style={{ lineHeight: 4 }}
+                onClick={() => {
+                  openNotificationWithIcon(
+                    WARNING,
+                    "Sorry this feature is being updated!!",
+                    "warning"
+                  );
+                }}
               >
                 NEWS
               </NavLink>
             </li>
             <li className={`${styleHeader["line"]} `}>
               <NavLink
-                to="/contact"
+                to="/"
                 className=" px-5 py-6 
                 text-white hover:text-white font-bold"
                 style={{ lineHeight: 4 }}
+                onClick={() => {
+                  openNotificationWithIcon(
+                    WARNING,
+                    "Sorry this feature is being updated!!",
+                    "warning"
+                  );
+                }}
               >
                 CONTACT
               </NavLink>

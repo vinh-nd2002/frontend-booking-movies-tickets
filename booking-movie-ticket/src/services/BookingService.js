@@ -5,7 +5,17 @@ const getAllSeats = () => {
 };
 
 const getScheduleMovieById = (id) => {
-  return Api.get(`/schedulemovies/${id}`);
+  return Api.get(`/schedule-movies/${id}`);
+};
+
+const sendMailAfterBookingSuccess = (email, scheduleMovieId) => {
+  const requestParams = {
+    email: email,
+    scheduleMovieId: scheduleMovieId,
+  };
+  return Api.get("/schedule-movies/success-ticket-booking", {
+    params: requestParams,
+  });
 };
 
 const getSchedules = () => {
@@ -13,7 +23,7 @@ const getSchedules = () => {
 };
 
 const createScheduleMovie = (formData) => {
-  return Api.post("/schedulemovies", formData);
+  return Api.post("/schedule-movies", formData);
 };
 
 export const BookingService = {
@@ -21,4 +31,5 @@ export const BookingService = {
   getAllSeats,
   getSchedules,
   createScheduleMovie,
+  sendMailAfterBookingSuccess,
 };

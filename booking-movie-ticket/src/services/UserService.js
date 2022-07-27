@@ -4,6 +4,10 @@ const login = (userLogin) => {
   return Api.post("/login", userLogin);
 };
 
+const getProfile = (userId) => {
+  return Api.get(`/users/${userId}`);
+};
+
 const resendConfirmUser = (email) => {
   const requestParams = {
     email: email,
@@ -54,4 +58,5 @@ export const UserService = {
   resetPasswordRequest,
   resendConfirmUser,
   resendResetPassword,
+  getProfile,
 };

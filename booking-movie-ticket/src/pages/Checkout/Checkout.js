@@ -14,6 +14,8 @@ import "./Checkout.css";
 import _ from "lodash";
 import { over } from "stompjs";
 import SockJS from "sockjs-client";
+import { BookingService } from "../../services/BookingService";
+import { NavLink } from "react-router-dom";
 
 export let stompClient = null;
 
@@ -27,6 +29,7 @@ export const Checkout = (props) => {
     arrOtherChoosingSeat,
   } = useSelector((state) => state.BookingReducer);
 
+  console.log("scheduleMovieDetail", scheduleMovieDetail);
   let arrBookedSeats = { ...scheduleMovieDetail.tickets };
 
   const dispatch = useDispatch();
@@ -95,8 +98,13 @@ export const Checkout = (props) => {
         );
         stompClient.subscribe(
           `/schedule-movie/${props.match.params.id}/success`,
-          () => {
+          async () => {
             dispatch(getScheduleMovieDetailAction(props.match.params.id));
+            // send mail
+            await BookingService.sendMailAfterBookingSuccess(
+              userLogin.email,
+              props.match.params.id
+            );
           }
         );
 
@@ -115,6 +123,7 @@ export const Checkout = (props) => {
     );
   };
   useEffect(() => {
+    window.scrollTo(0, 0);
     dispatch(getAllSeatsAction());
     dispatch(getScheduleMovieDetailAction(props.match.params.id));
     connect();
@@ -216,7 +225,7 @@ export const Checkout = (props) => {
   };
 
   return (
-    <div className="container ">
+    <div className="container mt-16 mb-10">
       <div className="grid grid-cols-12">
         <div className="col-span-9">
           <div className="flex flex-col items-center mt-5">
@@ -290,39 +299,56 @@ export const Checkout = (props) => {
             </table>
           </div>
         </div>
-        <div className="col-span-3">
-          <h3 className="text-center text-green-500">
-            {arrChoosingSeat
-              .reduce((total, seat, index) => {
-                let ticketPrice = scheduleMovieDetail.moviePrice;
-                if (seat.seatType === "VIP") {
-                  ticketPrice = scheduleMovieDetail.moviePrice * 1.5;
-                }
-                return (total += ticketPrice);
-              }, 0)
-              .toLocaleString()}
-            Đ
+        <div className="col-span-3 mt-20">
+          <h3 className="flex justify-between text-xl text-black">
+            <span> Tên phim: </span>
+            <NavLink
+              to={`/movie-detail/${scheduleMovieDetail.movieId}`}
+              className="font-bold text-black"
+            >
+              {scheduleMovieDetail.movieName}
+            </NavLink>
           </h3>
-          <hr />
-          <h3>Tên phim: {scheduleMovieDetail.movieName}</h3>
-          <p>Địa điểm: {scheduleMovieDetail.cinemaName}</p>
-          <p>Ngày chiếu: {scheduleMovieDetail.scheduleDate}</p>
-          <p>Giờ bắt đầu: {scheduleMovieDetail.scheduleDate}</p>
-          <hr />
-          <div className="flex">
-            <div className="text-left w-4/5">
-              <span className="text-red-500">Ghế</span>
 
-              {_.sortBy(arrChoosingSeat, "seatNumber").map((seat, index) => {
-                return (
-                  <span key={index} className="text-green-500 text-xl ml-3">
-                    {seat.seatNumber}
-                  </span>
-                );
-              })}
+          <hr className="my-5" />
+          <h3 className="flex justify-between ">
+            <span>Địa điểm: </span>
+            <span className="font-bold ">{scheduleMovieDetail.cinemaName}</span>
+          </h3>
+          <h3 className="flex justify-between ">
+            <span> Ngày chiếu: </span>
+            <span className="font-bold ">
+              {" "}
+              {scheduleMovieDetail.scheduleDate}
+            </span>
+          </h3>
+          <h3 className="flex justify-between ">
+            <span> Giờ bắt đầu: </span>
+            <span className="font-bold ">
+              {" "}
+              {scheduleMovieDetail.scheduleStart}
+            </span>
+          </h3>
+
+          <hr className="my-5" />
+          <div className="flex justify-between gap-2">
+            <div className="">
+              <span className="text-red-700 font-semibold">Ghế</span>
+              <div className="grid grid-cols-5 gap-1">
+                {_.sortBy(arrChoosingSeat, "seatNumber").map((seat, index) => {
+                  return (
+                    <span
+                      key={index}
+                      className="text-green-500 text-lg col-span-1 font-bold"
+                    >
+                      {seat.seatNumber}
+                    </span>
+                  );
+                })}
+              </div>
             </div>
-            <div className="text-right">
-              <span className="text-green-500">
+            <div className="text-xl">
+              <span className="text-green-500 font-bold">
                 {arrChoosingSeat
                   .reduce((total, seat, index) => {
                     let ticketPrice = scheduleMovieDetail.moviePrice;
@@ -336,14 +362,22 @@ export const Checkout = (props) => {
               </span>
             </div>
           </div>
-          <div className="my-5">
-            <i>Email</i> <br /> {userLogin.email}
+          <div className="my-5 text-black">
+            <i className="text-lg font-bold ">Email</i> <br />{" "}
+            <span className="text-lg text-green-500 font-semibold">
+              {" "}
+              {userLogin.email}
+            </span>
           </div>
-          <div className="my-5">
-            <i>Phone</i> <br /> {userLogin.numberPhone}
+          <div className="my-5 text-black">
+            <i className="text-lg font-bold ">Phone</i> <br />{" "}
+            <span className="text-lg text-green-500 font-semibold">
+              {" "}
+              {userLogin.numberPhone}
+            </span>
           </div>
           <button
-            className="mb-0 bg-green-500 block w-full"
+            className="mb-0 bg-green-500 block w-full text-white font-bold py-4 hover:bg-green-700 duration-500"
             onClick={() => {
               const action = bookingTicketsAction(
                 arrChoosingSeat,
@@ -361,30 +395,3 @@ export const Checkout = (props) => {
     </div>
   );
 };
-
-// const PayForTickets = (props) => {
-//   return <div>Thanh cong</div>;
-// };
-
-// const { TabPane } = Tabs;
-
-// const TabCheckout = (props) => {
-//   return (
-//     <div className="p-5">
-//       <Tabs defaultActiveKey="1">
-//         <TabPane
-//           tab={<h1 className="text-red-600 text-lg">THÔNG TIN PHÒNG VÉ</h1>}
-//           key="1"
-//         >
-//           <Checkout {...props} />
-//         </TabPane>
-//         <TabPane tab="THANH TOÁN ĐẶT VÉ" disabled key="2">
-//           <PayForTickets {...props} />
-//         </TabPane>
-//         <TabPane tab="KẾT QUẢ ĐẶT VÉ" disabled key="3"></TabPane>
-//       </Tabs>
-//     </div>
-//   );
-// };
-
-// export default TabCheckout;

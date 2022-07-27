@@ -3,16 +3,20 @@ import { useFormik } from "formik";
 import moment from "moment";
 import { React, useState } from "react";
 import { useDispatch } from "react-redux";
-import { NavLink, Redirect } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { registerAction } from "../../redux/actions/UserActions";
-import { USER_LOGIN } from "../../utils/settings/config";
+import { USER_LOGIN, WARNING } from "../../utils/settings/config";
 import { UserService } from "../../services/UserService";
+import { openNotificationWithIcon } from "../../components/Notification/Notification";
 
 const bgAuth = "/img/bgAuth.jpg";
 
 export const Register = (props) => {
+  if (localStorage.getItem(USER_LOGIN)) {
+    openNotificationWithIcon(WARNING, "Please logout", "warning");
+    props.history.push("/");
+  }
   const dispatch = useDispatch();
-  const userLogin = JSON.parse(localStorage.getItem(USER_LOGIN));
   const [visible, setVisible] = useState(false);
 
   const formik = useFormik({
@@ -34,10 +38,6 @@ export const Register = (props) => {
       dispatch(registerAction(values));
     },
   });
-
-  if (userLogin) {
-    return <Redirect to="/" />;
-  }
 
   const handleChangeDatePicker = (value) => {
     let dateOfBirth = moment(value).format("YYYY-MM-DD");

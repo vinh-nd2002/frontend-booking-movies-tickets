@@ -1,12 +1,11 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { FacebookOutlined } from "@ant-design/icons";
 const bgAuth = "/img/bgAuth.jpg";
 
 export const Footer = () => {
   return (
     <footer
-      className="px-4 divide-y "
+      className="px-4 divide-y border-t-2 border-white"
       style={{ backgroundImage: `url(${bgAuth}` }}
     >
       <div className="container flex flex-col justify-between py-10 mx-auto space-y-8 lg:flex-row lg:space-y-0">

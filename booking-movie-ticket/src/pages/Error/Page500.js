@@ -1,7 +1,7 @@
 import { Button } from "antd";
 import { NavLink } from "react-router-dom";
 
-const Page500 = () => (
+export const Page500 = () => (
   <div
     className="flex justify-center items-center"
     style={{ width: "100vw", height: "100vh" }}
@@ -37,5 +37,3 @@ const Page500 = () => (
     </div>
   </div>
 );
-
-export default Page500;
