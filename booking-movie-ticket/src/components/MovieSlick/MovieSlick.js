@@ -45,7 +45,7 @@ export const MovieSlick = (props) => {
     });
   };
 
-  let acctiveClassMoviesDefault =
+  let activeClassMoviesDefault =
     statusMovieDefault === true ? "active_Film" : "none_active_Film";
 
   let activeClassMoviesPlaying =
@@ -72,43 +72,46 @@ export const MovieSlick = (props) => {
 
   return (
     <div className="container">
-      <button
-        style={{ width: "200px" }}
-        className={`${styleSlick[acctiveClassMoviesDefault]} px-8 py-4 mr-1 font-semibold border rounded-sm border-black text-black border  duration-500 hover:bg-black hover:text-white`}
-        onClick={() => {
-          dispatch(getAllMovieAction());
-        }}
-      >
-        TẤT CẢ PHIM
-      </button>
-      <button
-        style={{ width: "200px" }}
-        className={`${styleSlick[activeClassMoviesPlaying]} px-8 py-4 mr-1 font-semibold border rounded-sm border-black text-black border  duration-500 hover:bg-black hover:text-white`}
-        onClick={() => {
-          const action = { type: SET_MOVIE_PLAYING };
-          dispatch(action);
-        }}
-      >
-        PHIM ĐANG CHIẾU
-      </button>
-      <button
-        style={{ width: "200px" }}
-        type="button"
-        className={` relative ${styleSlick[activeClassMoviesComingSoon]} px-8 py-4 mr-1 font-semibold border rounded-sm border-black text-black border overflow-hidden duration-500 hover:bg-black hover:text-white`}
-        onClick={() => {
-          const action = { type: SET_MOVIE_COMING_SOON };
-          dispatch(action);
-        }}
-      >
-        COMING SOON
-        <span
-          className="absolute top-0 right-0 px-5 py-1 text-xs tracking-wider text-center uppercase origin-bottom-left transform rotate-45 -translate-y-full translate-x-1/3 text-white bg-red-600 border-red-600
-        "
+      <div className="mb-5">
+        <button
+          style={{
+            width: "200px",
+          }}
+          className={`${styleSlick[activeClassMoviesDefault]} px-8 py-4 mr-1 font-semibold  rounded-sm ${styleSlick["btn-category"]} border  duration-500 hover:text-white`}
+          onClick={() => {
+            dispatch(getAllMovieAction());
+          }}
         >
-          hot
-        </span>
-      </button>
-
+          ALL MOVIES
+        </button>
+        <button
+          style={{ width: "200px" }}
+          className={`${styleSlick[activeClassMoviesPlaying]} px-8 py-4 mr-1 font-semibold  rounded-sm ${styleSlick["btn-category"]} text-black border  duration-500  hover:text-white`}
+          onClick={() => {
+            const action = { type: SET_MOVIE_PLAYING };
+            dispatch(action);
+          }}
+        >
+          PLAYING MOVIES
+        </button>
+        <button
+          style={{ width: "200px" }}
+          type="button"
+          className={` relative ${styleSlick[activeClassMoviesComingSoon]} ${styleSlick["btn-category"]}  px-8 py-4 mr-1 font-semibold  rounded-sm  text-black border overflow-hidden duration-500  hover:text-white`}
+          onClick={() => {
+            const action = { type: SET_MOVIE_COMING_SOON };
+            dispatch(action);
+          }}
+        >
+          COMING SOON
+          <span
+            className="absolute top-0 right-0 px-5 py-1 text-xs tracking-wider text-center uppercase origin-bottom-left transform rotate-45 -translate-y-full translate-x-1/3 text-white bg-red-600 border-red-600
+        "
+          >
+            hot
+          </span>
+        </button>
+      </div>
       <Slider {...settings}>{renderMovieSlick()}</Slider>
     </div>
   );

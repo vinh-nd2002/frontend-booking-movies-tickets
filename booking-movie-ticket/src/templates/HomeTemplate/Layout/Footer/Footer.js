@@ -20,7 +20,7 @@ export const Footer = () => {
         <div className="grid grid-cols-3 text-sm gap-x-3 gap-y-8 lg:w-2/3 ">
           <div className="space-y-3">
             <h3 className=" uppercase text-white font-semibold text-center">
-              đối tác
+              partner
             </h3>
             <div className="grid grid-cols-3 gap-3">
               <a
@@ -129,14 +129,14 @@ export const Footer = () => {
           </div>
           <div className="space-y-3">
             <h3 className=" uppercase text-white font-semibold text-center">
-              liên hệ tôi
+              contact me
             </h3>
             <div className="flex justify-around">
               <a
                 target="_blank"
                 rel="noopener noreferrer"
                 href="https://www.facebook.com/lai.vinh.718"
-                title="Facebook"
+                title="Facebook: https://www.facebook.com/lai.vinh.718"
               >
                 <img
                   src="/img/contact-icon/logo-facebook.png"
@@ -148,7 +148,7 @@ export const Footer = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 href="https://www.google.com/intl/vi/gmail/about/"
-                title="Gmail"
+                title="Gmail: nguduyvinh2k2@gmail.com"
               >
                 <img
                   src="/img/contact-icon/logo-google.png"
@@ -160,18 +160,42 @@ export const Footer = () => {
           </div>
           <div className="space-y-3">
             <h3 className=" uppercase text-white font-semibold text-center">
-              chính sách bảo mật
+              PRIVACY POLICY
             </h3>
             <ul>
-              <li className=" text-white text-center">Điện thoại</li>
-              <li className=" text-white text-center">Facebook</li>
-              <li className=" text-white text-center">Gmail</li>
+              <li className=" text-white text-center" title="0366.315.426">
+                Phone
+              </li>
+              <li
+                className=" text-white text-center"
+                title="Facebook: https://www.facebook.com/lai.vinh.718"
+              >
+                Facebook
+              </li>
+              <li
+                className=" text-white text-center"
+                title="Gmail: nguduyvinh2k2@gmail.com"
+              >
+                Gmail
+              </li>
             </ul>
           </div>
         </div>
       </div>
-      <div className="py-6 text-sm text-center text-white">
-        © 2022 Made by <span className="font-semibold">Ngũ Duy Vinh</span>
+      <div className="py-6 text-sm text-center text-white font-bold">
+        <NavLink to="/" className="text-red-600 hover:text-red-600">
+          MovieStar
+        </NavLink>{" "}
+        ©2022 Created by{" "}
+        <a
+          target="_blank"
+          rel="noopener noreferrer"
+          href="https://www.facebook.com/lai.vinh.718"
+          title="Facebook: https://www.facebook.com/lai.vinh.718"
+          className="text-white hover:text-white"
+        >
+          Ngũ Duy Vinh
+        </a>
       </div>
     </footer>
   );

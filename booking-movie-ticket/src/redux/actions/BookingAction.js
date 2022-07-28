@@ -117,7 +117,7 @@ export const bookingTicketsAction = (
           JSON.stringify(scheduleMovieId)
         );
       }, 100);
-      openNotificationWithIcon(SUCCESS, "Đặt vé thành công", "success");
+      openNotificationWithIcon(SUCCESS, "Booking ticket successful", "success");
     }
   };
 };

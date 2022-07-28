@@ -6,7 +6,7 @@ import { CineplexService } from "../../../services/CineplexService";
 import { CinemaService } from "../../../services/CinemaService";
 import { BookingService } from "../../../services/BookingService";
 import { openNotificationWithIcon } from "../../../components/Notification/Notification";
-import { SUCCESS } from "../../../utils/settings/config";
+import { ERROR, SUCCESS } from "../../../utils/settings/config";
 
 const layout = {
   labelCol: { span: 8 },
@@ -21,7 +21,6 @@ export default function ShowTime(props) {
       scheduleDate: "",
     },
     onSubmit: async (values) => {
-      console.log("values", values);
       try {
         let body = new FormData();
         body.append("movieId", values.movieId);
@@ -32,10 +31,15 @@ export default function ShowTime(props) {
 
         openNotificationWithIcon(
           SUCCESS,
-          "Tạo lịch chiếu thành công",
+          "Successful movie showtimes",
           "success"
         );
       } catch (error) {
+        openNotificationWithIcon(
+          ERROR,
+          "Sorry, an unexpected error has occurred. Please try again",
+          "error"
+        );
         console.log("error", error);
       }
     },
@@ -53,20 +57,17 @@ export default function ShowTime(props) {
       try {
         let listCineplexs = await CineplexService.getAllCineplexs();
         let allSchedules = await BookingService.getSchedules();
-
-        // let listSchedulesOfMovie = await MovieService.getMovieById(
-        //   props.match.params.id
-        // );
-        // console.log(
-        //   "listSchedulesOfMovie",
-        //   listSchedulesOfMovie.scheduleMovies
-        // );
         setState({
           ...state,
           cineplexs: listCineplexs,
           schedules: allSchedules,
         });
       } catch (error) {
+        openNotificationWithIcon(
+          ERROR,
+          "Sorry, an unexpected error has occurred. Please try again",
+          "error"
+        );
         console.log(error);
       }
     }
@@ -82,7 +83,12 @@ export default function ShowTime(props) {
         cinemas: result.cinemas,
       });
     } catch (error) {
-      console.log("error", error.response?.data);
+      openNotificationWithIcon(
+        ERROR,
+        "Sorry, an unexpected error has occurred. Please try again",
+        "error"
+      );
+      console.log("error", error);
     }
   };
 
@@ -103,13 +109,18 @@ export default function ShowTime(props) {
         rooms: result.rooms,
       });
     } catch (error) {
+      openNotificationWithIcon(
+        ERROR,
+        "Sorry, an unexpected error has occurred. Please try again",
+        "error"
+      );
+
       console.log("error", error);
     }
   };
 
   const onOk = (values) => {
     formik.setFieldValue("scheduleDate", moment(values).format("YYYY-MM-DD"));
-    console.log("values", moment(values).format("YYYY-MM-DD"));
   };
 
   const convertSelectHTR = () => {
@@ -125,7 +136,7 @@ export default function ShowTime(props) {
   return (
     <div className="container ">
       <h3 className="text-2xl text-center mb-4">
-        Tạo lịch chiếu - {props.match.params.movieName}
+        Create showtimes - {props.match.params.movieName}
       </h3>
       <div className="grid grid-cols-4 gap-4">
         <div className="col-span-1">
@@ -142,55 +153,62 @@ export default function ShowTime(props) {
           wrapperCol={{ span: 16 }}
           onSubmitCapture={formik.handleSubmit}
         >
-          <Form.Item label="Hệ thống rạp">
+          <Form.Item label="Theater system">
             <Select
               options={convertSelectHTR()}
               onChange={handleChangeCineplex}
-              placeholder="Chọn hệ thống rạp"
+              placeholder="Select theater system"
             />
           </Form.Item>
 
-          <Form.Item label="Cụm rạp">
+          <Form.Item label="Cinema">
             <Select
               options={state.cinemas?.map((cinema, index) => ({
                 label: cinema.cinemaName,
                 value: cinema.cinemaId,
               }))}
               onChange={handleChangeCinema}
-              placeholder="Chọn cụm rạp"
+              placeholder="SelectCinema"
             />
           </Form.Item>
 
-          <Form.Item label="Phòng chiếu">
+          <Form.Item label="Room">
             <Select
               options={state.rooms?.map((room, index) => ({
                 label: room.roomName,
                 value: room.roomId,
               }))}
               onChange={handleChangeRoom}
-              placeholder="Chọn phòng chiếu"
+              placeholder="Select room"
             />
           </Form.Item>
 
-          <Form.Item label="Giờ chiếu">
+          <Form.Item label="Showtimes">
             <Select
               options={state.schedules?.map((schedule, index) => ({
                 label: schedule.scheduleStart,
                 value: schedule.scheduleId,
               }))}
               onChange={handleChangeSchedule}
-              placeholder="Chọn giờ chiếu"
+              placeholder="Select showtimes"
             />
           </Form.Item>
 
-          <Form.Item label="Ngày chiếu">
+          <Form.Item label="Show date">
             <DatePicker format="YYYY-MM-DD" showTime onOk={onOk} />
           </Form.Item>
 
           <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
-            <Button type="primary" htmlType="submit">
-              Tạo lịch chiếu
-            </Button>
+            <button
+              type="primary"
+              htmlType="submit"
+              className="text-white py-2 px-6 font-bold uppercase"
+              style={{
+                background: "linear-gradient(to right, #fbbd61, #ec7532)",
+              }}
+            >
+              Create
+            </button>
           </Form.Item>
         </Form>
       </div>

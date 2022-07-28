@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { Dropdown, Menu, Space } from "antd";
-import Button from "../../../../components/Button/Button";
 import { USER_LOGIN, WARNING } from "../../../../utils/settings/config";
 import { useDispatch } from "react-redux";
 import { logoutAction } from "../../../../redux/actions/UserActions";
@@ -15,14 +14,19 @@ export const Header = (props) => {
       items={[
         {
           key: "1",
-          label: (
-            <NavLink
-              to={`/profile/${userLogin?.userId}`}
-              className=" text-black font-semibold"
-            >
-              Profile
-            </NavLink>
-          ),
+          label:
+            userLogin?.role === "CUSTOMER" ? (
+              <NavLink
+                to={`/profile/${userLogin?.userId}`}
+                className=" text-black font-semibold"
+              >
+                Profile
+              </NavLink>
+            ) : (
+              <NavLink to="/admin" className=" text-black font-semibold">
+                Admin Management
+              </NavLink>
+            ),
         },
         {
           key: "2",
@@ -50,7 +54,7 @@ export const Header = (props) => {
               className="font-bold"
               onClick={() => {
                 dispatch(logoutAction());
-                props.history.push("/auth/login");
+                props.history.push("/");
               }}
             >
               LOGOUT
@@ -104,7 +108,7 @@ export const Header = (props) => {
           <ul className="flex">
             <li className={`${styleHeader["line"]} `}>
               <NavLink
-                to="/home"
+                to="/"
                 className=" px-5 py-6 
                 text-white hover:text-white font-bold"
                 style={{ lineHeight: 4 }}
@@ -151,20 +155,29 @@ export const Header = (props) => {
             dropdownHeader()
           ) : (
             <div className="items-center flex-shrink-0 grid grid-cols-2 gap-2">
-              <Button
-                textContent="Login"
-                className="w-full !rounded-none col-span-1"
+              <button
+                style={{
+                  background: "linear-gradient(to right, #fbbd61, #ec7532)",
+                }}
+                className="w-full !rounded-none col-span-1 font-bold py-2 px-6"
                 onClick={() => {
                   props.history.push("/auth/login");
                 }}
-              ></Button>
-              <Button
-                textContent="Register"
-                className="w-full !rounded-none col-span-1"
+              >
+                LOGIN
+              </button>
+
+              <button
+                style={{
+                  background: "linear-gradient(to right, #fbbd61, #ec7532)",
+                }}
+                className="w-full !rounded-none col-span-1 font-bold py-2 px-6"
                 onClick={() => {
                   props.history.push("/auth/register");
                 }}
-              ></Button>
+              >
+                REGISTER
+              </button>
             </div>
           )}
         </div>
@@ -184,7 +197,7 @@ export const Header = (props) => {
           <ul className="flex">
             <li className={`${styleHeader["line"]}`}>
               <NavLink
-                to="/home"
+                to="/"
                 className=" px-5 py-6  
                 text-white hover:text-white font-bold"
                 style={{ lineHeight: 4 }}
@@ -231,20 +244,29 @@ export const Header = (props) => {
             dropdownHeader()
           ) : (
             <div className="items-center flex-shrink-0 grid grid-cols-2 gap-2">
-              <Button
-                textContent="Login"
-                className="w-full !rounded-none col-span-1"
+              <button
+                style={{
+                  background: "linear-gradient(to right, #fbbd61, #ec7532)",
+                }}
+                className="w-full !rounded-none col-span-1 font-bold py-2 px-6"
                 onClick={() => {
                   props.history.push("/auth/login");
                 }}
-              ></Button>
-              <Button
-                textContent="Register"
-                className="w-full !rounded-none col-span-1"
+              >
+                LOGIN
+              </button>
+
+              <button
+                style={{
+                  background: "linear-gradient(to right, #fbbd61, #ec7532)",
+                }}
+                className="w-full !rounded-none col-span-1 font-bold py-2 px-6"
                 onClick={() => {
                   props.history.push("/auth/register");
                 }}
-              ></Button>
+              >
+                REGISTER
+              </button>
             </div>
           )}
         </div>

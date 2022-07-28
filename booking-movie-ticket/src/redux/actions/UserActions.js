@@ -21,9 +21,9 @@ export const loginAction = (userLogin, propsRoute) => {
         : propsRoute.history.push(
             propsRoute.location.state ? propsRoute.location.state.from : "/"
           );
-      openNotificationWithIcon(SUCCESS, "Login thành công", "success");
+      openNotificationWithIcon(SUCCESS, "Logged in successfully", "success");
     } catch (error) {
-      openNotificationWithIcon(ERROR, "Login thất bại", "error");
+      openNotificationWithIcon(ERROR, "Login failed", "error");
       console.log("error>>", error);
     }
   };
@@ -35,7 +35,7 @@ export const logoutAction = () => {
       type: LOGOUT,
       value: {},
     });
-    openNotificationWithIcon(SUCCESS, "Logout thành công", "success");
+    openNotificationWithIcon(SUCCESS, "Logout successfully", "success");
   };
 };
 
@@ -43,14 +43,9 @@ export const registerAction = (body) => {
   return async (dispatch) => {
     try {
       await UserService.register(body);
-      openNotificationWithIcon(
-        SUCCESS,
-        "Đăng ký tài khoản thành công",
-        "success"
-      );
       dispatch(getAllUsersAction());
     } catch (error) {
-      openNotificationWithIcon(ERROR, "Đăng ký thất bại", "error");
+      openNotificationWithIcon(ERROR, "Registration failed", "error");
       console.log("error>>", error);
     }
   };
@@ -63,8 +58,12 @@ export const getAllUsersAction = () => {
 
       dispatch({ type: GET_ALL_USERS, value: result });
     } catch (error) {
-      openNotificationWithIcon(ERROR, "Đăng ký thất bại", "error");
-      console.log("error>>", error);
+      openNotificationWithIcon(
+        ERROR,
+        "Sorry, an unexpected error has occurred. Please try again",
+        "error"
+      );
+      console.log("error", error);
     }
   };
 };
@@ -76,8 +75,12 @@ export const getProfileUserAction = (userId) => {
 
       dispatch({ type: GET_USER_DETAIL, value: result });
     } catch (error) {
-      openNotificationWithIcon(ERROR, "Đăng ký thất bại", "error");
-      console.log("error>>", error);
+      openNotificationWithIcon(
+        ERROR,
+        "Sorry, an unexpected error has occurred. Please try again",
+        "error"
+      );
+      console.log("error", error);
     }
   };
 };

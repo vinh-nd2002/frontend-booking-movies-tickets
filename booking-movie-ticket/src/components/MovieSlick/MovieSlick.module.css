@@ -13,9 +13,15 @@
 }
 
 .active_Film {
-  @apply bg-black text-white;
+  background: linear-gradient(to right, #fbbd61, #ec7532);
+  color: white;
 }
 
 .none_active_Film {
   @apply bg-white text-black;
+}
+
+.btn-category:hover {
+  background: linear-gradient(to right, #fbbd61, #ec7532);
+  color: white;
 }

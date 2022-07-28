@@ -1,11 +1,6 @@
 import Api from "./baseApi";
 
-const getAllMovies = (search, minMovieEvaluate, maxMovieEvaluate) => {
-  const requestParams = {
-    search: search,
-    minMovieEvaluate: minMovieEvaluate ? minMovieEvaluate : 0,
-    maxMovieEvaluate: maxMovieEvaluate ? maxMovieEvaluate : 10,
-  };
+const getAllMovies = (requestParams) => {
   return Api.get("/movies", { params: requestParams });
 };
 

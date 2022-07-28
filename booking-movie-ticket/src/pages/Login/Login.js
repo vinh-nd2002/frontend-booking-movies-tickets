@@ -85,7 +85,7 @@ export const Login = (props) => {
               type="text"
               name="username"
               className="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-              placeholder="Nhập Username"
+              placeholder="Input your username"
               onChange={formik.handleChange}
             />
             {formik.errors.username && formik.touched.username && (
@@ -100,7 +100,7 @@ export const Login = (props) => {
               type="password"
               name="password"
               className="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-              placeholder="Nhập Password"
+              placeholder="Input your password"
               onChange={formik.handleChange}
             />
             {formik.errors.password && formik.touched.password && (
@@ -127,13 +127,14 @@ export const Login = (props) => {
           </div>
           <button
             type="submit"
-            className="inline-block px-7 py-3 bg-blue-600 text-white font-medium text-sm leading-snug uppercase rounded shadow-md transition duration-500 ease-in-out w-full hover:scale-90"
-            data-mdb-ripple="true"
-            data-mdb-ripple-color="light"
+            className="text-white py-2 px-6 rounded-sm font-bold w-full uppercase"
+            style={{
+              background: "linear-gradient(to right, #fbbd61, #ec7532)",
+            }}
           >
             Sign in
           </button>
-          <NavLink to="/auth/register">Bạn chưa có tài khoản?</NavLink>
+          <NavLink to="/auth/register">Do not have an account?</NavLink>
           <div className="flex items-center my-4 before:flex-1 before:border-t before:border-gray-300 before:mt-0.5 after:flex-1 after:border-t after:border-gray-300 after:mt-0.5">
             <p className="text-center font-semibold mx-4 mb-0">OR</p>
           </div>

@@ -65,7 +65,6 @@ const AddNew = () => {
       let reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = (e) => {
-        // console.log(e.target.result);
         setImgSrc(e.target.result); //Hình base 64
       };
       //Đem dữ liệu file lưu vào formik
@@ -88,37 +87,39 @@ const AddNew = () => {
         }}
         size="default"
       >
-        <h1>Thêm mới phim </h1>
+        <h3 className="text-4xl font-semibold mx-auto text-center my-5">
+          Create New Movie
+        </h3>
 
-        <Form.Item label="Tên phim">
+        <Form.Item label="Movie Name">
           <Input
             name="movieName"
             onChange={formik.handleChange}
-            placeholder="Nhập tên phim"
+            placeholder="Input movie name"
           />
         </Form.Item>
         <Form.Item label="Trailer">
           <Input
             name="movieTrailer"
             onChange={formik.handleChange}
-            placeholder="Nhập trailer"
+            placeholder="Input trailer"
           />
         </Form.Item>
-        <Form.Item label="Mô tả">
+        <Form.Item label="Description">
           <Input
             name="movieDescription"
             onChange={formik.handleChange}
-            placeholder="Nhập mô tả"
+            placeholder="Input Description"
           />
         </Form.Item>
-        <Form.Item label="Ngày khởi chiếu">
+        <Form.Item label="Show date">
           <DatePicker format={"YYYY-MM-DD"} onChange={handleChangeDatePicker} />
         </Form.Item>
-        <Form.Item label="Sắp chiếu">
+        <Form.Item label="Coming soon">
           <Switch onChange={handleChangeSwitch("movieStatus")} />
         </Form.Item>
 
-        <Form.Item label="Số sao">
+        <Form.Item label="Evaluate">
           <InputNumber
             onChange={handleChangeInputNumber("movieEvaluate")}
             min={1}
@@ -126,11 +127,11 @@ const AddNew = () => {
           />
         </Form.Item>
 
-        <Form.Item label="Giá phim">
+        <Form.Item label="Movie Price">
           <InputNumber onChange={handleChangeInputNumber("moviePrice")} />
         </Form.Item>
 
-        <Form.Item label="Thời lượng phim">
+        <Form.Item label="Movie Length">
           <InputNumber onChange={handleChangeInputNumber("movieLength")} />
         </Form.Item>
 
@@ -141,11 +142,21 @@ const AddNew = () => {
             accept="image/png, image/jpeg,image/gif,image/png"
           />
           <br />
-          <img style={{ width: 150, height: 200 }} src={imgSrc} alt="..." />
+          {imgSrc ? (
+            <img style={{ width: 200, height: 300 }} src={imgSrc} alt="..." />
+          ) : (
+            <></>
+          )}
         </Form.Item>
-        <Form.Item label="Tác vụ">
-          <button type="submit" className="bg-blue-300 text-white p-2">
-            Thêm phim
+        <Form.Item wrapperCol={{ offset: 4, span: 14 }}>
+          <button
+            type="submit"
+            className="text-white py-2 px-6 font-bold uppercase"
+            style={{
+              background: "linear-gradient(to right, #fbbd61, #ec7532)",
+            }}
+          >
+            Create movie
           </button>
         </Form.Item>
       </Form>

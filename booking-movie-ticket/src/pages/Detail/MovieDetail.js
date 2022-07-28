@@ -32,9 +32,15 @@ export const MovieDetail = (props) => {
     return filtered_array?.map((scheduleItem, index) => {
       return (
         <NavLink to={`/checkout/${scheduleItem.scheduleMovieId}`} key={index}>
-          <div className="bg-black flex items-center justify-center p-3 gap-2 text-base text-white hover:bg-gray-500 duration-300 border-2">
+          <div
+            className=" flex items-center justify-center p-3 gap-1   duration-300  font-semibold"
+            style={{
+              background: "linear-gradient(to right, #fbbd61, #ec7532)",
+              color: "white",
+            }}
+          >
             <ClockCircleOutlined />
-            <h3 className="m-0 text-white">{scheduleItem.scheduleStart}</h3>
+            {scheduleItem.scheduleStart}
           </div>
         </NavLink>
       );
@@ -72,7 +78,7 @@ export const MovieDetail = (props) => {
                 <Collapse bordered={false} className="!bg-transparent">
                   <Panel
                     header={
-                      <h1 className="!text-white">{`Phòng: ${roomItem.roomName}`}</h1>
+                      <h1 className="!text-white">{`Room: ${roomItem.roomName}`}</h1>
                     }
                   >
                     <div key={index} className="grid grid-cols-5 gap-4">
@@ -131,7 +137,7 @@ export const MovieDetail = (props) => {
             />
             <div className="ml-4 p-4 ">
               <p className="text-sm">
-                Ngày chiếu:
+                Release:
                 <span className="text-lg text-red-700 ml-2 font-bold">
                   {movieDetail.movieRelease}
                 </span>
@@ -141,11 +147,11 @@ export const MovieDetail = (props) => {
               </p>
               <p className="italic">" {movieDetail.movieDescription} "</p>
               <p className="text-gray-300 text-xs ">
-                Thời lượng phim:{" "}
+                Length:{" "}
                 <span className="italic text-white font-bold">
                   {movieDetail.movieLength}
                 </span>{" "}
-                phút
+                minutes
               </p>
             </div>
           </div>
@@ -158,7 +164,7 @@ export const MovieDetail = (props) => {
                 fontSize: 15,
               }}
             >
-              Đánh giá
+              Ratings
             </h1>
             <h1
               style={{ marginLeft: "10%" }}

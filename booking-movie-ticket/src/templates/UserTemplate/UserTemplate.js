@@ -1,17 +1,19 @@
 import { Dropdown, Menu, Space } from "antd";
 import React, { Fragment } from "react";
 import { useDispatch } from "react-redux";
-import { NavLink, Redirect, Route } from "react-router-dom";
+import { NavLink, Redirect, Route, useHistory } from "react-router-dom";
 import { openNotificationWithIcon } from "../../components/Notification/Notification";
 import { logoutAction } from "../../redux/actions/UserActions";
-import { TOKEN, USER_LOGIN, WARNING } from "../../utils/settings/config";
+import { ERROR, TOKEN, USER_LOGIN, WARNING } from "../../utils/settings/config";
 import { Footer } from "../HomeTemplate/Layout/Footer/Footer";
 import styleHeader from "./../HomeTemplate/Layout/Header/Header.module.css";
 const UserTemplate = (props) => {
   const userLogin = JSON.parse(localStorage.getItem(USER_LOGIN));
-  const { Component, history, ...restProps } = props;
+  const { Component, ...restProps } = props;
   const dispatch = useDispatch();
+  const history = useHistory();
   if (!localStorage.getItem(TOKEN)) {
+    openNotificationWithIcon(ERROR, "Please login", "error");
     return <Redirect to="/auth/login" exact />;
   }
 
@@ -55,7 +57,7 @@ const UserTemplate = (props) => {
               className="font-bold"
               onClick={() => {
                 dispatch(logoutAction());
-                props.history.push("/auth/login");
+                history.push("/");
               }}
             >
               LOGOUT
@@ -92,7 +94,7 @@ const UserTemplate = (props) => {
                 <ul className="flex">
                   <li className={`${styleHeader["line"]}`}>
                     <NavLink
-                      to="/home"
+                      to="/"
                       className=" px-5 py-6  
                 text-white hover:text-white font-bold"
                       style={{ lineHeight: 4 }}

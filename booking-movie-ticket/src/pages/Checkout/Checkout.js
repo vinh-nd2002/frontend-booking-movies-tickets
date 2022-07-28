@@ -29,7 +29,6 @@ export const Checkout = (props) => {
     arrOtherChoosingSeat,
   } = useSelector((state) => state.BookingReducer);
 
-  console.log("scheduleMovieDetail", scheduleMovieDetail);
   let arrBookedSeats = { ...scheduleMovieDetail.tickets };
 
   const dispatch = useDispatch();
@@ -141,7 +140,6 @@ export const Checkout = (props) => {
         username: userLogin.username,
       };
 
-      console.log("seatBooking", seatBooking);
       if (stompClient) {
         stompClient.send(
           "/booking/reset-seats",
@@ -234,7 +232,7 @@ export const Checkout = (props) => {
               style={{ width: "80%", height: 15 }}
             ></div>
             <div className={`${style["trapezoid"]} text-center`}>
-              <h3 className="mt-3 text-black">Màn hình</h3>
+              <p className="mt-3 text-black">Screen</p>
             </div>
             <div>{renderSeats()}</div>
           </div>
@@ -242,12 +240,12 @@ export const Checkout = (props) => {
             <table className=" divide-y divide-gray-200 w-2/3">
               <thead className="bg-gray-50 p-5">
                 <tr>
-                  <th className="text-center">Ghế chưa đặt</th>
-                  <th className="text-center">Ghế đang đặt</th>
-                  <th className="text-center">Ghế VIP</th>
-                  <th className="text-center">Ghế đã đặt</th>
-                  <th className="text-center">Ghế bạn đặt</th>
-                  <th className="text-center">Ghế người khác đang đặt</th>
+                  <th className="text-center">Not booked</th>
+                  <th className="text-center">Booking</th>
+                  <th className="text-center">VIP</th>
+                  <th className="text-center">Booked</th>
+                  <th className="text-center">My Seat</th>
+                  <th className="text-center">Other user is booking</th>
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
@@ -299,9 +297,9 @@ export const Checkout = (props) => {
             </table>
           </div>
         </div>
-        <div className="col-span-3 mt-20">
+        <div className="col-span-3 mt-20 border-2 rounded-xl p-4">
           <h3 className="flex justify-between text-xl text-black">
-            <span> Tên phim: </span>
+            <span> Movie Name: </span>
             <NavLink
               to={`/movie-detail/${scheduleMovieDetail.movieId}`}
               className="font-bold text-black"
@@ -309,32 +307,37 @@ export const Checkout = (props) => {
               {scheduleMovieDetail.movieName}
             </NavLink>
           </h3>
-
-          <hr className="my-5" />
+          <img
+            className="mx-auto"
+            src={scheduleMovieDetail.moviePoster}
+            alt={scheduleMovieDetail.movieName}
+            style={{ height: 250 }}
+          />
+          <hr className="my-2" />
           <h3 className="flex justify-between ">
-            <span>Địa điểm: </span>
+            <span>Address: </span>
             <span className="font-bold ">{scheduleMovieDetail.cinemaName}</span>
           </h3>
           <h3 className="flex justify-between ">
-            <span> Ngày chiếu: </span>
+            <span> Schedule Date: </span>
             <span className="font-bold ">
               {" "}
               {scheduleMovieDetail.scheduleDate}
             </span>
           </h3>
           <h3 className="flex justify-between ">
-            <span> Giờ bắt đầu: </span>
+            <span> Start At: </span>
             <span className="font-bold ">
               {" "}
               {scheduleMovieDetail.scheduleStart}
             </span>
           </h3>
 
-          <hr className="my-5" />
+          <hr className="my-2" />
           <div className="flex justify-between gap-2">
             <div className="">
-              <span className="text-red-700 font-semibold">Ghế</span>
-              <div className="grid grid-cols-5 gap-1">
+              <span className="text-red-700 font-semibold">Seat</span>
+              <div className="grid grid-cols-6 gap-1">
                 {_.sortBy(arrChoosingSeat, "seatNumber").map((seat, index) => {
                   return (
                     <span
@@ -362,14 +365,14 @@ export const Checkout = (props) => {
               </span>
             </div>
           </div>
-          <div className="my-5 text-black">
+          <div className="my-2 text-black">
             <i className="text-lg font-bold ">Email</i> <br />{" "}
             <span className="text-lg text-green-500 font-semibold">
               {" "}
               {userLogin.email}
             </span>
           </div>
-          <div className="my-5 text-black">
+          <div className="my-2 text-black">
             <i className="text-lg font-bold ">Phone</i> <br />{" "}
             <span className="text-lg text-green-500 font-semibold">
               {" "}
@@ -377,7 +380,10 @@ export const Checkout = (props) => {
             </span>
           </div>
           <button
-            className="mb-0 bg-green-500 block w-full text-white font-bold py-4 hover:bg-green-700 duration-500"
+            className="mb-0  block w-full text-white font-bold py-4 rounded-sm text-xl"
+            style={{
+              background: "linear-gradient(to right, #fbbd61, #ec7532)",
+            }}
             onClick={() => {
               const action = bookingTicketsAction(
                 arrChoosingSeat,
@@ -388,7 +394,7 @@ export const Checkout = (props) => {
               dispatch(action);
             }}
           >
-            ĐẶT VÉ
+            BOOKING
           </button>
         </div>
       </div>

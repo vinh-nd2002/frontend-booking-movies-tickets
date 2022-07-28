@@ -69,9 +69,11 @@ export const Register = (props) => {
             borderRadius: 6,
           }}
         >
-          <h1 className="text-center text-4xl my-5">Thông tin đăng ký</h1>
+          <h1 className="text-center text-4xl my-5">
+            Registration Information
+          </h1>
           <Modal
-            title="Thông báo"
+            title="Notification"
             centered
             visible={visible}
             onOk={() => {
@@ -85,18 +87,19 @@ export const Register = (props) => {
             width={1000}
           >
             <h1>
-              Xin chào
+              Hi
               <span className="text-xl font-bold ">
                 {" "}
-                {formik.values.username}
+                {formik.values.username}{" "}
               </span>
-              , chúng tôi đã xác nhận thành công yêu cầu đăng ký thành viên mới
-              từ bạn. Chúng tôi đã gửi 1 gmail xác nhận kích hoạt tài khoản tới
-              <span className="text-xl font-bold "> {formik.values.email}</span>
-              mà bạn vừa đăng ký. Vui lòng kiểm tra lại gmail của bạn và xác
-              nhận tài khoản!!
+              we have successfully confirmed your new member registration
+              request. We have sent a confirmation of gmail account activation
+              to the email{" "}
+              <span className="text-xl font-bold "> {formik.values.email}</span>{" "}
+              you just registered. Please check your gmail and confirm the
+              account!!
             </h1>
-            <h1>Thân trọng!</h1>
+            <h1>Best regards!</h1>
             <button
               className="text-blue-600"
               onClick={async () => {
@@ -132,7 +135,7 @@ export const Register = (props) => {
                 ]}
               >
                 <Input
-                  placeholder="Input first name"
+                  placeholder="Input your first name"
                   name="firstName"
                   onChange={formik.handleChange}
                 />
@@ -155,19 +158,23 @@ export const Register = (props) => {
               >
                 <Input
                   name="lastName"
-                  placeholder="Input last name"
+                  placeholder="Input your last name"
                   onChange={formik.handleChange}
                 />
               </Form.Item>
             </Form.Item>
-            <Form.Item label="Giới tính" style={{ marginBottom: 10 }}>
+            <Form.Item label="Gender" style={{ marginBottom: 10 }} required>
               <Radio.Group
                 name="gender"
                 onChange={handleTypeRadio}
                 defaultValue="MALE"
               >
-                <Radio value="MALE">Nam</Radio>
-                <Radio value="FEMALE">Nữ</Radio>
+                <Radio value="MALE" className="font-bold">
+                  Male
+                </Radio>
+                <Radio value="FEMALE" className="font-bold">
+                  Female
+                </Radio>
               </Radio.Group>
             </Form.Item>
 
@@ -209,7 +216,7 @@ export const Register = (props) => {
               ]}
               style={{ marginBottom: 10 }}
             >
-              <Input placeholder="Input username" name="username" />
+              <Input placeholder="Input your username" name="username" />
             </Form.Item>
 
             <Form.Item
@@ -233,7 +240,10 @@ export const Register = (props) => {
               ]}
               style={{ marginBottom: 10 }}
             >
-              <Input.Password placeholder="Input password" name="password" />
+              <Input.Password
+                placeholder="Input your password"
+                name="password"
+              />
             </Form.Item>
 
             <Form.Item
@@ -305,11 +315,11 @@ export const Register = (props) => {
               <Input
                 name="email"
                 onChange={formik.handleChange}
-                placeholder="Input email"
+                placeholder="Input your email"
               />
             </Form.Item>
             <Form.Item
-              label="Ngày sinh"
+              label="Date of Birth"
               name="dateOfBirth"
               rules={[
                 {
@@ -323,7 +333,7 @@ export const Register = (props) => {
               <DatePicker
                 format={"YYYY-MM-DD"}
                 onChange={handleChangeDatePicker}
-                placeholde="Input date of birth"
+                placeholder="Input your date of birth"
               />
             </Form.Item>
             <Form.Item
@@ -338,11 +348,11 @@ export const Register = (props) => {
               ]}
               style={{ marginBottom: 10 }}
             >
-              <Input placeholder="Input number phone" name="numberPhone" />
+              <Input placeholder="Input your number phone" name="numberPhone" />
             </Form.Item>
 
             <Form.Item
-              label="Địa chỉ"
+              label="Address"
               onChange={formik.handleChange}
               name="address"
               rules={[
@@ -357,17 +367,22 @@ export const Register = (props) => {
               ]}
               style={{ marginBottom: 10 }}
             >
-              <Input placeholder="Input address" name="address" />
+              <Input placeholder="Input your address" name="address" />
             </Form.Item>
 
             <Form.Item wrapperCol={{ offset: 4, span: 14 }}>
               <button
                 type="submit"
-                className="bg-green-600 w-full rounded-none p-2 text-white font-bold border-none"
+                className="text-white py-2 px-6 font-bold w-full uppercase"
+                style={{
+                  background: "linear-gradient(to right, #fbbd61, #ec7532)",
+                }}
               >
                 Register
               </button>
-              <NavLink to="/auth/login">Bạn đã có tài khoản?</NavLink>
+              <NavLink to="/auth/login">
+                Do you already have an account?
+              </NavLink>
             </Form.Item>
           </Form>
         </div>

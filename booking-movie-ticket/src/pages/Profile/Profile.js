@@ -1,6 +1,5 @@
 import { Redirect, useParams } from "react-router-dom";
 import { EditFilled } from "@ant-design/icons";
-import "./Profile.css";
 import { React } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useFormik } from "formik";
@@ -10,6 +9,8 @@ import { useEffect } from "react";
 import { getProfileUserAction } from "../../redux/actions/UserActions";
 
 const bgAuth = "/img/bgAuth.jpg";
+const avatarMale = "/img/avatar-nam.jpg";
+const avatarFemale = "/img/avatar-nam.jpg";
 
 export const Profile = (props) => {
   const { userDetail } = useSelector((state) => state.UserReducer);
@@ -30,7 +31,9 @@ export const Profile = (props) => {
   });
 
   return !userLogin ? (
-    <Redirect to="/" />
+    () => {
+      return <Redirect to="/" />;
+    }
   ) : (
     <>
       <div
@@ -58,9 +61,11 @@ export const Profile = (props) => {
                 <img
                   className="rounded-full w-28 h-28"
                   src={
-                    userLogin.avatar
-                      ? userLogin.avatar
-                      : "https://nhathauxaydung24h.com/wp-content/uploads/2022/01/avatar-ngau-loi.jpg"
+                    userDetail.avatar
+                      ? userDetail.avatar
+                      : userDetail.gender === "MALE"
+                      ? avatarMale
+                      : avatarFemale
                   }
                   alt={userLogin.username}
                 />

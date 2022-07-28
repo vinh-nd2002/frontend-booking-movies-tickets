@@ -10,16 +10,18 @@ import { HomeCarousel } from "../../templates/HomeTemplate/Layout/HomeCarousel/H
 export const Home = () => {
   const { movies } = useSelector((state) => state.MovieReducer);
   const { cineplexs } = useSelector((state) => state.CineplexReducer);
+
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getAllMovieAction());
     dispatch(getAllCineplexAction());
   }, []);
+
   return (
     <div>
       <HomeCarousel />
       <section className="text-gray-600 body-font">
-        <div className="container px-5 py-20">
+        <div className="container px-5 my-20">
           <MovieSlick movies={movies} />
         </div>
       </section>

@@ -1,6 +1,5 @@
 import { TOKEN, USER_LOGIN } from "../../utils/settings/config";
 import {
-  GET_ALL_USER,
   GET_ALL_USERS,
   GET_USER_DETAIL,
   LOGIN,

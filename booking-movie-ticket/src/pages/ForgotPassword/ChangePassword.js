@@ -4,7 +4,7 @@ import { useFormik } from "formik";
 
 import { Redirect, useParams } from "react-router-dom";
 
-import { SUCCESS, USER_LOGIN } from "../../utils/settings/config";
+import { ERROR, SUCCESS, USER_LOGIN } from "../../utils/settings/config";
 import { UserService } from "../../services/UserService";
 import { openNotificationWithIcon } from "../../components/Notification/Notification";
 
@@ -22,9 +22,22 @@ export const ChangePassword = (props) => {
     },
 
     onSubmit: async (values) => {
-      await UserService.resetPassword(token, values.newPassword);
-      openNotificationWithIcon(SUCCESS, "Đổi mật khẩu thành công", "success");
-      props.history.push("/auth/login");
+      try {
+        await UserService.resetPassword(token, values.newPassword);
+        openNotificationWithIcon(
+          SUCCESS,
+          "Change password successfully",
+          "success"
+        );
+        props.history.push("/auth/login");
+      } catch (error) {
+        openNotificationWithIcon(
+          ERROR,
+          "Sorry, an unexpected error has occurred. Please try again",
+          "error"
+        );
+        console.log("error", error);
+      }
     },
   });
 
@@ -55,7 +68,7 @@ export const ChangePassword = (props) => {
           }}
         >
           <h1 className="text-center text-4xl my-5">
-            Vui lòng cung cấp đổi mật khẩu của bạn
+            Please change your password
           </h1>
 
           <Form
@@ -136,9 +149,12 @@ export const ChangePassword = (props) => {
             <Form.Item wrapperCol={{ offset: 4, span: 14 }}>
               <button
                 type="submit"
-                className="bg-green-600 w-full rounded-none p-2 text-white font-bold border-none ml-2"
+                className="text-white py-2 px-6 font-bold w-full uppercase ml-2"
+                style={{
+                  background: "linear-gradient(to right, #fbbd61, #ec7532)",
+                }}
               >
-                Đổi mật khẩu
+                Change Password
               </button>
             </Form.Item>
           </Form>

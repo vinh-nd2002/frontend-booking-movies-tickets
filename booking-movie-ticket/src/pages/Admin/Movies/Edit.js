@@ -82,7 +82,6 @@ const Edit = (props) => {
       let reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = (e) => {
-        // console.log(e.target.result);
         setImgSrc(e.target.result); //Hình base 64
       };
       //Đem dữ liệu file lưu vào formik
@@ -106,12 +105,15 @@ const Edit = (props) => {
         }}
         size="default"
       >
-        <h3>Cập nhật thông tin phim </h3>
-        <Form.Item label="Tên phim">
+        <h3 className="text-4xl font-semibold mx-auto text-center my-5">
+          Update Movie{" "}
+        </h3>
+        <Form.Item label="Movie Name">
           <Input
             name="movieName"
             onChange={formik.handleChange}
             value={formik.values.movieName}
+            placeholder="Input movie name"
           />
         </Form.Item>
         <Form.Item label="Trailer">
@@ -119,16 +121,18 @@ const Edit = (props) => {
             name="movieTrailer"
             onChange={formik.handleChange}
             value={formik.values.movieTrailer}
+            placeholder="Input trailer"
           />
         </Form.Item>
-        <Form.Item label="Mô tả">
+        <Form.Item label="Description">
           <Input
             name="movieDescription"
             onChange={formik.handleChange}
+            placeholder="Input Description"
             value={formik.values.movieDescription}
           />
         </Form.Item>
-        <Form.Item label="Ngày khởi chiếu">
+        <Form.Item label="Show date">
           <DatePicker
             onChange={handleChangeDatePicker}
             format={"YYYY-MM-DD"}
@@ -136,14 +140,14 @@ const Edit = (props) => {
           />
         </Form.Item>
 
-        <Form.Item label="Sắp chiếu">
+        <Form.Item label="Coming soon">
           <Switch
             onChange={handleChangeSwitch("movieStatus")}
             checked={formik.values.movieStatus}
           />
         </Form.Item>
 
-        <Form.Item label="Số sao">
+        <Form.Item label="Evaluate">
           <InputNumber
             min={1}
             max={10}
@@ -151,13 +155,13 @@ const Edit = (props) => {
             value={formik.values.movieEvaluate}
           />
         </Form.Item>
-        <Form.Item label="Giá phim">
+        <Form.Item label="Movie Price">
           <InputNumber
             onChange={handleChangeInputNumber("moviePrice")}
             value={formik.values.moviePrice}
           />
         </Form.Item>
-        <Form.Item label="Thời lượng phim">
+        <Form.Item label="Movie Length">
           <InputNumber
             onChange={handleChangeInputNumber("movieLength")}
             value={formik.values.movieLength}
@@ -177,9 +181,15 @@ const Edit = (props) => {
             alt="..."
           />
         </Form.Item>
-        <Form.Item label="Button">
-          <button type="submit" className="bg-blue-300 text-white p-2">
-            Cập nhật
+        <Form.Item wrapperCol={{ offset: 4, span: 14 }}>
+          <button
+            type="submit"
+            className="text-white py-2 px-6 uppercase font-bold "
+            style={{
+              background: "linear-gradient(to right, #fbbd61, #ec7532)",
+            }}
+          >
+            Update Movie
           </button>
         </Form.Item>
       </Form>

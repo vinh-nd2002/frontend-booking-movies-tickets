@@ -1,0 +1,2 @@
+export const GET_ALL_TICKETS = "GET_ALL_TICKETS";
+export const ACCEPT_TICKET = "ACCEPT_TICKET";

@@ -12,15 +12,21 @@ export const SchedulesMovie = (props) => {
     const arrScheduleOfMovie = arrSchedules.filter(
       (item) => item.movieId === movieItem.movieId
     );
-    return arrScheduleOfMovie?.map((scheduleMoiveItem, index) => {
+    return arrScheduleOfMovie?.map((scheduleMovieItem, index) => {
       return (
         <NavLink
-          to={`/checkout/${scheduleMoiveItem.scheduleMovieId}`}
+          to={`/checkout/${scheduleMovieItem.scheduleMovieId}`}
           key={index}
         >
-          <div className="bg-black flex items-center justify-center p-3 gap-1 text-white hover:bg-gray-400 duration-300 hover:text-black font-semibold">
+          <div
+            className=" flex items-center justify-center p-3 gap-1   duration-300  font-semibold"
+            style={{
+              background: "linear-gradient(to right, #fbbd61, #ec7532)",
+              color: "white",
+            }}
+          >
             <ClockCircleOutlined />
-            {scheduleMoiveItem.scheduleStart}
+            {scheduleMovieItem.scheduleStart}
           </div>
         </NavLink>
       );
@@ -68,7 +74,7 @@ export const HomeSchedule = (props) => {
     <Collapse bordered={false}>
       <Panel
         header={
-          <h1 className="font-bold text-base">{`Phòng: ${room.roomName}`}</h1>
+          <h1 className="font-bold text-base">{`Room: ${room.roomName}`}</h1>
         }
       >
         <SchedulesMovie arrMovies={arrMovies} arrSchedules={arrSchedules} />

@@ -30,15 +30,15 @@ export default function Movies(props) {
       maxMovieEvaluate: 10,
     },
     onSubmit: (values) => {
-      dispatch(
-        getAllMovieAction(
-          values.movieName,
-          values.minMovieEvaluate,
-          values.maxMovieEvaluate
-        )
-      );
+      const requestParams = {
+        search: values.movieName,
+        minMovieEvaluate: values.minMovieEvaluate ? values.minMovieEvaluate : 0,
+        maxMovieEvaluate: values.maxMovieEvaluate
+          ? values.maxMovieEvaluate
+          : 10,
+      };
+      dispatch(getAllMovieAction(requestParams));
     },
-    onReset: (values) => {},
   });
 
   const handleChangeInputNumber = (name) => {
@@ -49,14 +49,15 @@ export default function Movies(props) {
 
   const columns = [
     {
-      title: "Mã phim",
+      title: "Movie ID",
       dataIndex: "movieId",
       sorter: (a, b) => a.movieId - b.movieId,
       sortDirections: ["descend", "ascend"],
-      width: "15%",
+      width: "10%",
     },
+
     {
-      title: "Hình ảnh",
+      title: "Movie's Poster",
       dataIndex: "moviePoster",
       render: (text, movie, index) => {
         return (
@@ -64,8 +65,8 @@ export default function Movies(props) {
             <img
               src={movie.moviePoster}
               alt={movie.movieName}
-              width={50}
-              height={50}
+              width={150}
+              title={movie.movieName}
               onError={(e) => {
                 e.target.onError = null;
                 e.target.src = `https://picsum.photos/id/${index}/50/50`;
@@ -74,10 +75,10 @@ export default function Movies(props) {
           </Fragment>
         );
       },
-      width: "15%",
+      width: "20%",
     },
     {
-      title: "Tên phim",
+      title: "Movie's Name",
       dataIndex: "movieName",
       sorter: (a, b) => {
         let movieNameA = a.movieName.toLowerCase().trim();
@@ -87,27 +88,37 @@ export default function Movies(props) {
         }
         return -1;
       },
+      render: (text, movie, index) => {
+        return (
+          <NavLink
+            to={`/movie-detail/${movie.movieId}`}
+            className="font-bold text-black hover:text-black"
+          >
+            {movie.movieName}
+          </NavLink>
+        );
+      },
       sortDirections: ["descend", "ascend"],
-      width: "25%",
+      width: "20%",
     },
     {
-      title: "Mô tả",
+      title: "Description",
       dataIndex: "movieDescription",
 
       render: (text, movie) => {
         return (
           <Fragment>
-            {movie.movieDescription.length > 50
-              ? movie.movieDescription.substr(0, 50) + " ..."
+            {movie.movieDescription.length > 300
+              ? movie.movieDescription.substr(0, 300) + " ..."
               : movie.movieDescription}
           </Fragment>
         );
       },
       sortDirections: ["descend", "ascend"],
-      width: "25%",
+      width: "30%",
     },
     {
-      title: "Hành động",
+      title: "Action",
       dataIndex: "movieId",
       render: (text, movie) => {
         return (
@@ -126,7 +137,10 @@ export default function Movies(props) {
               onClick={() => {
                 //Gọi action xoá
                 if (
-                  window.confirm("Bạn có chắc muốn xoá phim " + movie.movieName)
+                  window.confirm(
+                    "Are you sure you want to delete the movie " +
+                      movie.movieName
+                  )
                 ) {
                   //Gọi action
                   dispatch(deleteMovieByIdAction(movie.movieId));
@@ -150,31 +164,37 @@ export default function Movies(props) {
         );
       },
       sortDirections: ["descend", "ascend"],
-      width: "25%",
+      width: "10%",
     },
   ];
   const data = moviesDefault;
 
   return (
     <div>
-      <h3 className="text-4xl">Quản lý Phim</h3>
+      <h3 className="text-4xl">Movies Management</h3>
       <div className="flex justify-between">
-        <Button
-          className="mb-5"
+        <button
+          className="mb-5 py-2 px-4 rounded-sm text-white font-bold"
+          style={{
+            background: "linear-gradient(to right, #fbbd61, #ec7532)",
+          }}
           onClick={() => {
             props.history.push("/admin/movies/add-new");
           }}
         >
-          Thêm phim
-        </Button>
-        <Button
-          className="mb-5"
+          Create New Movie
+        </button>
+        <button
+          className="mb-5 py-2 px-4 rounded-sm text-white font-bold"
+          style={{
+            background: "linear-gradient(to right, #fbbd61, #ec7532)",
+          }}
           onClick={() => {
             dispatch(getAllMovieAction());
           }}
         >
           Reset
-        </Button>
+        </button>
       </div>
 
       <Form onSubmitCapture={formik.handleSubmit}>
@@ -183,28 +203,30 @@ export default function Movies(props) {
           min={1}
           max={10}
           onChange={handleChangeInputNumber("minMovieEvaluate")}
-          placeholder="Nhập đánh giá phim thấp nhất"
+          placeholder="Input min evaluate"
         />
         <InputNumber
           style={{ width: "20%" }}
           min={1}
           max={10}
           onChange={handleChangeInputNumber("maxMovieEvaluate")}
-          placeholder="Nhập đánh giá phim cao nhất nhất"
+          placeholder="Input max evaluate"
         />
         <Input
           name="movieName"
           onChange={formik.handleChange}
-          placeholder="Nhập tên phim "
+          placeholder="Input movie's name"
           style={{
             width: "50%",
           }}
         />
         <button
+          className="mb-5 px-4 rounded-sm text-white font-bold"
           style={{
+            background: "linear-gradient(to right, #fbbd61, #ec7532)",
             width: "10%",
+            padding: 5,
           }}
-          className="p-1 bg-blue-500 rounded-sm"
           type="submit"
         >
           Search

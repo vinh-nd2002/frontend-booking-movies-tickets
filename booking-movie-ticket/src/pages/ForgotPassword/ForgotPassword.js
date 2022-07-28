@@ -50,10 +50,10 @@ export const ForgotPassword = (props) => {
           }}
         >
           <h1 className="text-center text-4xl my-5">
-            Vui lòng cung cấp Email của bạn
+            Please provide your Email
           </h1>
           <Modal
-            title="Thông báo"
+            title="Notification"
             centered
             visible={visible}
             onOk={() => {
@@ -67,20 +67,19 @@ export const ForgotPassword = (props) => {
             width={1000}
           >
             <h1>
-              Xin chào bạn , chúng tôi đã xác nhận thành công yêu cầu cung cấp
-              tới
-              <span className="text-xl font-bold "> {formik.values.email}</span>
-              mà bạn vừa cung cấp. Vui lòng kiểm tra lại gmail của bạn và xác
-              nhận tài khoản!!
+              Hi, we have successfully confirmed the Email{" "}
+              <span className="text-xl font-bold "> {formik.values.email}</span>{" "}
+              request you just provided. Please check your gmail and confirm the
+              account!!
             </h1>
-            <h1>Thân trọng!</h1>
+            <h1>Best regards!</h1>
             <button
               className="text-blue-600"
               onClick={async () => {
                 await UserService.resendResetPassword(formik.values.email);
               }}
             >
-              Tôi chưa nhận được gmail?
+              I have not received gmail?
             </button>
           </Modal>
           <Form
@@ -122,18 +121,23 @@ export const ForgotPassword = (props) => {
               <Input
                 name="email"
                 onChange={formik.handleChange}
-                placeholder="Input email"
+                placeholder="Input your email"
               />
             </Form.Item>
 
             <Form.Item wrapperCol={{ offset: 4, span: 14 }}>
               <button
                 type="submit"
-                className="bg-green-600 w-full rounded-none p-2 text-white font-bold border-none"
+                className="text-white py-2 px-6 font-bold w-full rounded-sm uppercase"
+                style={{
+                  background: "linear-gradient(to right, #fbbd61, #ec7532)",
+                }}
               >
-                Xác nhận
+                Confirm
               </button>
-              <NavLink to="/auth/login">Bạn đã có tài khoản?</NavLink>
+              <NavLink to="/auth/login">
+                Do you already have an account?
+              </NavLink>
             </Form.Item>
           </Form>
         </div>

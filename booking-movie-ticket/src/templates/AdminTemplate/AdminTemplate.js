@@ -2,11 +2,16 @@ import { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect, Route } from "react-router";
 import { Layout, Menu, Breadcrumb, Dropdown, Space } from "antd";
-import { FileOutlined, UserOutlined } from "@ant-design/icons";
+import {
+  VideoCameraOutlined,
+  UserOutlined,
+  VideoCameraAddOutlined,
+  TagOutlined,
+} from "@ant-design/icons";
 import { NavLink } from "react-router-dom";
-// import _ from "lodash";
-import { USER_LOGIN } from "../../utils/settings/config";
+import { USER_LOGIN, WARNING } from "../../utils/settings/config";
 import { logoutAction } from "../../redux/actions/UserActions";
+import { openNotificationWithIcon } from "../../components/Notification/Notification";
 
 const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
@@ -39,26 +44,28 @@ const AdminTemplate = (props) => {
     {
       key: "1",
       label: (
-        <NavLink to="/profile" className=" text-black">
-          Profile
-        </NavLink>
-      ),
-    },
-    {
-      key: "3",
-      label: (
-        <NavLink to="/settings" className=" text-black">
+        <NavLink
+          to="/admin"
+          className=" text-black font-semibold"
+          onClick={() => {
+            openNotificationWithIcon(
+              WARNING,
+              "Sorry this feature is being updated!!",
+              "warning"
+            );
+          }}
+        >
           Settings
         </NavLink>
       ),
     },
     {
-      key: "4",
+      key: "2",
       danger: true,
       label: (
         <NavLink
           className="font-bold hover:!text-red-600 duration-500"
-          to="/auth/login"
+          to="/"
           onClick={() => {
             dispatch(logoutAction());
           }}
@@ -98,21 +105,31 @@ const AdminTemplate = (props) => {
           <Fragment>
             <Layout>
               <Sider collapsible collapsed={collapsed} onCollapse={onCollapse}>
-                <div className="logo mb-1">
+                <div
+                  className="logo mb-2.5 cursor-pointer"
+                  onClick={() => propsRoute.history.push("/")}
+                >
                   <img src="/logo.svg" alt="logo" />
                 </div>
                 <Menu theme="dark" defaultSelectedKeys={["1"]} mode="inline">
                   <Menu.Item key="1" icon={<UserOutlined />}>
                     <NavLink to="/admin/users">Users</NavLink>
                   </Menu.Item>
-                  <SubMenu key="sub1" icon={<FileOutlined />} title="Movies">
-                    <Menu.Item key="10" icon={<FileOutlined />}>
+                  <SubMenu
+                    key="sub1"
+                    icon={<VideoCameraOutlined />}
+                    title="Movies"
+                  >
+                    <Menu.Item key="10" icon={<VideoCameraOutlined />}>
                       <NavLink to="/admin/movies">Movies</NavLink>
                     </Menu.Item>
-                    <Menu.Item key="11" icon={<FileOutlined />}>
+                    <Menu.Item key="11" icon={<VideoCameraAddOutlined />}>
                       <NavLink to="/admin/movies/add-new">Add new</NavLink>
                     </Menu.Item>
                   </SubMenu>
+                  <Menu.Item key="12" icon={<TagOutlined />}>
+                    <NavLink to="/admin/tickets">Tickets</NavLink>
+                  </Menu.Item>
                 </Menu>
               </Sider>
               <Layout className="site-layout">
@@ -131,8 +148,20 @@ const AdminTemplate = (props) => {
                     <Component {...propsRoute} />
                   </div>
                 </Content>
-                <Footer style={{ textAlign: "center" }}>
-                  Ant Design ©2018 Created by 500 Server Error
+                <Footer style={{ textAlign: "center" }} className="font-bold">
+                  <NavLink to="/" className="text-red-600 hover:text-red-600">
+                    MovieStar
+                  </NavLink>{" "}
+                  ©2022 Created by{" "}
+                  <a
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href="https://www.facebook.com/lai.vinh.718"
+                    title="Facebook"
+                    className="text-black hover:text-black"
+                  >
+                    Ngũ Duy Vinh
+                  </a>
                 </Footer>
               </Layout>
             </Layout>
